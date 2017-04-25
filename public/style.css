@@ -4,3 +4,24 @@
 .App {
   text-align: center;
   font-family: cursive; }
+
+.navbar ul {
+  float: right; }
+
+.navbar li {
+  float: left;
+  list-style-type: none;
+  padding: .75rem; }
+
+.navbar:after {
+  content: " ";
+  clear: both;
+  display: table; }
+
+.voting-option {
+  list-style-type: none;
+  text-align: left; }
+
+.poll-list-item {
+  list-style-type: none;
+  text-align: left; }

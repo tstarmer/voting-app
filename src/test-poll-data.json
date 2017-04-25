@@ -1,27 +1,30 @@
 {
 	"polls":[
 		{
-			"id":1,
+			"id":0,
 			"title": "First Poll",
-			"poll-choices":[
+			"description":"Fancy stuf going on here",
+			"pollChoices":[
 				"First Choice",
 				"Second Choice",
 				"Third Choice"
 			]			
 		},
 		{
-			"id":2,
+			"id":1,
 			"title": "Second Poll",
-			"poll-choices":[
+			"description":"Cool stuff going on here",
+			"pollChoices":[
 				"Choice A",
 				"Choice B",
 				"Choice C"
 			]			
 		},
 		{
-			"id":3,
+			"id":2,
 			"title": "Yet Another Poll",
-			"poll-choices":[
+			"description":"What is going on here",
+			"pollChoices":[
 				"This",
 				"That",
 				"Another"
