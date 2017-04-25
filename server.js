@@ -1,5 +1,5 @@
 import config from "./config";
-
+import apiRouter from "./api"
 import sassMiddleware from "node-sass-middleware";
 import path from "path";
 
@@ -18,6 +18,8 @@ server.get('/', (req,res)=>{
 		content:"App loading"
 	})
 })
+
+server.use('/api', apiRouter)
 
 server.use(express.static('public'));
 
