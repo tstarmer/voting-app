@@ -3,11 +3,21 @@
 		{
 			"id":0,
 			"title": "First Poll",
-			"description":"Fancy stuf going on here",
+			"description":"Fancy stuff going on here",
 			"pollChoices":[
-				"First Choice",
-				"Second Choice",
-				"Third Choice"
+				{
+					"option":"First Choice",
+					"votes": 2
+				},
+				{
+					"option":"Second Choice",
+					"votes": 0
+				},
+				{
+					"option":"Second Choice",
+					"votes": 1
+				}
+
 			]			
 		},
 		{
@@ -15,19 +25,38 @@
 			"title": "Second Poll",
 			"description":"Cool stuff going on here",
 			"pollChoices":[
-				"Choice A",
-				"Choice B",
-				"Choice C"
-			]			
+				{
+					"option":"Choice A",
+					"votes": 2
+				},
+				{
+					"option":"Choice B",
+					"votes": 30
+				},
+				{
+					"option":"Choice C",
+					"votes": 1
+				}
+							]			
 		},
 		{
 			"id":2,
 			"title": "Yet Another Poll",
 			"description":"What is going on here",
 			"pollChoices":[
-				"This",
-				"That",
-				"Another"
+				{
+					"option":"This",
+					"votes": 200
+				},
+				{
+					"option":"That",
+					"votes": 0600
+				},
+				{
+					"option":"Another",
+					"votes": 1000
+				}
+				
 			]			
 		}
 	]
