@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import Poll from "./Poll"
 
+const ListItem =(props)=>{
+	return <li className="polls-list-item" id={props.id} onClick={props.handleClick} >{props.title}</li>
+}
+
+
 class Polls extends Component{
 	constructor(props){
 		super(props);
@@ -21,7 +26,7 @@ class Polls extends Component{
 				<ul className="polls-list">
 				{this.props.polls.map((poll,i)=>{
 					// console.log(this.props)
-					return <li className="polls-list-item" key={i} id={poll.id} onClick={this.handleClick} >{poll.title}</li>
+					return <ListItem key={i} id={poll.id} handleClick={this.handleClick} title={poll.title}/>
 				})}
 				</ul>
 			</div>

@@ -29,6 +29,16 @@ class App extends Component{
 
 	}
 
+	submitHandler=(id, option)=>{
+		console.log(id)
+		console.log(option)
+		var poll =this.state.polls[id-1]
+		console.log(poll)
+
+		// this.setState({polls[id-1]})
+	}
+
+
 	currentPoll(){
 		return this.state.polls[this.state.currentPoll]
 	}

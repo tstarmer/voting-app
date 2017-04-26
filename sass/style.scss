@@ -1,10 +1,32 @@
+
+/* Reset */
 *{
 	box-sizing:border-box;
 }
 
+
+li{
+	list-style-type: none;
+}
+/* 
+	
+    font-family: 'Ubuntu', sans-serif;
+
+    font-family: 'Playfair Display', serif;
+
+
+ */
+
 .App{
 	text-align:center;
-	font-family: cursive;
+	font-family: 'Ubuntu', sans-serif;
+}
+
+
+/* Typography */
+
+p{
+	font-family: 'Playfair Display', serif;
 }
 
 .navbar ul{
@@ -24,12 +46,52 @@
 	display:table;
 }
 
+
+
+/* Container */
+.polls-container{
+	width:60%;
+	margin:0 auto;
+}
+
+
+/* List items */
 .voting-option{
 	list-style-type:none;
 	text-align:left;
+	min-width:30%;
 }
 
-.poll-list-item{
+
+.polls-list-item{
+	font-size:1.25rem;
 	list-style-type: none;
 	text-align:left;
+	background:lightgreen;
+	padding:.75rem;
+	margin-top: .25rem;
+	margin-bottom: .25rem;
+	width:100%;
+	line-height:2.75rem;
+
+}
+
+/* Individual Poll style */
+.poll-container{
+  width:80%;
+  margin: 0 auto;
+}
+
+.options-box{
+	width:50%;
+	float:left;
+
+	select{
+		min-width: 60%;
+	}
+}
+
+.results-container{
+	width:50%;
+	float:right;
 }
