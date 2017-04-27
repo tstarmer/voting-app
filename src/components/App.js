@@ -31,9 +31,9 @@ class App extends Component{
 
 	submitHandler=(id, option)=>{
 		console.log(id)
-		console.log(option)
+		// console.log(option)
 		var poll =this.state.polls[id-1]
-		console.log(poll)
+		// console.log(poll)
 
 		// this.setState({polls[id-1]})
 	}
@@ -45,7 +45,7 @@ class App extends Component{
 
 	currentContent(){
 		if(this.state.currentPoll){
-			return <Poll poll={this.state.polls[this.state.currentPoll]} onClose={this.closeClickHandler}/>
+			return <Poll poll={this.state.polls[this.state.currentPoll]} onClose={this.closeClickHandler} onSubmit={this.submitHandler}/>
 		}
 		return <Polls polls={this.state.polls} onClick={this.pollClickHandler}/>
 	}
