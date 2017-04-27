@@ -1,7 +1,7 @@
 {
 	"polls":[
 		{
-			"id":1,
+			"id":0,
 			"title": "First Poll",
 			"description":"Fancy stuff going on here",
 			"pollChoices":[
@@ -14,14 +14,14 @@
 					"votes": 0
 				},
 				{
-					"option":"Second Choice",
+					"option":"Third Choice",
 					"votes": 1
 				}
 
 			]			
 		},
 		{
-			"id":2,
+			"id":1,
 			"title": "Second Poll",
 			"description":"Cool stuff going on here",
 			"pollChoices":[
@@ -40,7 +40,7 @@
 							]			
 		},
 		{
-			"id":3,
+			"id":2,
 			"title": "Yet Another Poll",
 			"description":"What is going on here",
 			"pollChoices":[

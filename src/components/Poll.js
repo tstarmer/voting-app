@@ -7,10 +7,14 @@ class Poll extends Component{
 	}
 
 	handleSubmit = (e) =>{
-	console.log("this", this)
-	console.log("id=", e.target[0].id,"value=", e.target[0].value)
-	e.preventDefault();
-	return this.props.onSubmit(e) 
+		e.preventDefault();
+			// console.log("this id", this.props.poll.id)
+		// console.log("targ=", e.target[0],"value=", e.target[0].value)
+		var id = this.props.poll.id
+			// console.log("poll id", id)
+		var choice = e.target[0].value
+	
+		return this.props.onSubmit(id, choice) 
 	}
 
 	render(){

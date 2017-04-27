@@ -30,12 +30,23 @@ class App extends Component{
 	}
 
 	submitHandler=(id, option)=>{
-		console.log(id)
-		// console.log(option)
-		var poll =this.state.polls[id-1]
-		// console.log(poll)
+			console.log("id", id)
+			console.log("option", option)
+		const polls = [...this.state.polls];
+			console.log(polls)
+		// var index = parseInt(id)
+		// 	console.log("index", index)
+		var pollToChange = polls[id]
+			console.log("poll", pollToChange)
+		var choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
+			return element.option === option
+		})
+			console.log("choicei", choiceIndex)
+			console.log("v before", (pollToChange.pollChoices[choiceIndex].votes))
+		pollToChange.pollChoices[choiceIndex].votes ++;
+			
 
-		// this.setState({polls[id-1]})
+		this.setState({polls:polls})
 	}
 
 
@@ -44,7 +55,8 @@ class App extends Component{
 	}
 
 	currentContent(){
-		if(this.state.currentPoll){
+		if(this.state.currentPoll || this.state.currentPoll == 0){
+			console.log("showing single poll")
 			return <Poll poll={this.state.polls[this.state.currentPoll]} onClose={this.closeClickHandler} onSubmit={this.submitHandler}/>
 		}
 		return <Polls polls={this.state.polls} onClick={this.pollClickHandler}/>
