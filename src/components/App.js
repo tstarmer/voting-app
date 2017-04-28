@@ -13,7 +13,7 @@ class App extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			authUser: false,
+			authUser: true,
 			currentPoll: null,
 			polls:this.props.initialData.polls
 		}
@@ -56,7 +56,7 @@ class App extends Component{
 
 	currentContent(){
 		if(this.state.currentPoll || this.state.currentPoll == 0){
-			console.log("showing single poll")
+			// console.log("showing single poll")
 			return <Poll poll={this.state.polls[this.state.currentPoll]} onClose={this.closeClickHandler} onSubmit={this.submitHandler}/>
 		}
 		return <Polls polls={this.state.polls} onClick={this.pollClickHandler}/>
@@ -66,7 +66,7 @@ class App extends Component{
 
 		return(
 			<div className="App container">
-				<Nav user={this.state.authUser}/>
+				<Nav user={this.state.authUser} onClose={this.closeClickHandler} onSubmit={this.submitNewPollHandler}/>
 				{this.currentContent()}
  				
 			</div>
