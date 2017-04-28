@@ -13,7 +13,7 @@ class Polls extends Component{
 
 	handleClick=(e)=>{
 		
-		this.props.onClick(parseInt(e.target.id))
+		this.props.clickHandler(parseInt(e.target.id))
 	}
 
 

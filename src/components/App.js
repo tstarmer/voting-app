@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import Poll from "./Poll"
 import Polls from "./Polls"
 import Nav from "./Nav"
+import NewPoll from "./NewPoll"
 
 const pushState = (object, url)=>{
 	console.log("pushing history")
@@ -30,9 +31,15 @@ class App extends Component{
 
 	}
 
+	navHandler=(menuItem)=>{
+			// console.log("setting nav")
+		pushState({currentPoll:menuItem}, `/${menuItem}`)
+		this.setState({currentPoll:menuItem})
+	}
+
+
 	submitHandler=(id, option)=>{
-			// console.log("id", id)
-			// console.log("option", option)
+			
 		const polls = [...this.state.polls];
 			// console.log(polls)
 		
@@ -54,19 +61,28 @@ class App extends Component{
 		return this.state.polls[this.state.currentPoll]
 	}
 
+	addNewPoll(e){
+		console.log(e.target)
+		//push new poll into data
+	}
+
+	
 	currentContent(){
 		if(this.state.currentPoll || this.state.currentPoll == 0){
 			// console.log("showing single poll")
+			if(this.state.currentPoll === "new"){
+				return <NewPoll onClose={this.closeClickHandler} onSubmit={this.addNewPoll}/>
+			}
 			return <Poll poll={this.state.polls[this.state.currentPoll]} onClose={this.closeClickHandler} onSubmit={this.submitHandler}/>
 		}
-		return <Polls polls={this.state.polls} onClick={this.pollClickHandler}/>
+		return <Polls polls={this.state.polls} clickHandler={this.pollClickHandler}/>
 	}
 
 	render(){
 
 		return(
 			<div className="App container">
-				<Nav user={this.state.authUser} onClose={this.closeClickHandler} onSubmit={this.submitNewPollHandler}/>
+				<Nav user={this.state.authUser} clickHandler={this.navHandler}/>
 				{this.currentContent()}
  				
 			</div>
