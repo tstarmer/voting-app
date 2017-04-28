@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
-const Nav = ()=>(
-	<nav className="navbar">
+const Nav = (props)=>(
+	
+	return <nav className="navbar">
 		<ul>
 			<li className="link">Home </li>
-			<li className="link">My Polls</li>
-			<li className="link">New Poll</li>
-			<li className="link">Sign in</li>
+			{this.props.user && <li className="link">My Polls</li>}
+			{this.props.user && <li className="link">New Poll</li>}
+			{!this.props.user && <li className="link">Sign in</li>}
 		</ul>
 	</nav>
 

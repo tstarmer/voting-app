@@ -13,6 +13,7 @@ class App extends Component{
 	constructor(props){
 		super(props);
 		this.state={
+			authUser: false,
 			currentPoll: null,
 			polls:this.props.initialData.polls
 		}
@@ -30,19 +31,18 @@ class App extends Component{
 	}
 
 	submitHandler=(id, option)=>{
-			console.log("id", id)
-			console.log("option", option)
+			// console.log("id", id)
+			// console.log("option", option)
 		const polls = [...this.state.polls];
-			console.log(polls)
-		// var index = parseInt(id)
-		// 	console.log("index", index)
+			// console.log(polls)
+		
 		var pollToChange = polls[id]
-			console.log("poll", pollToChange)
+			// console.log("poll", pollToChange)
 		var choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
 			return element.option === option
 		})
-			console.log("choicei", choiceIndex)
-			console.log("v before", (pollToChange.pollChoices[choiceIndex].votes))
+			// console.log("choicei", choiceIndex)
+			// console.log("v before", (pollToChange.pollChoices[choiceIndex].votes))
 		pollToChange.pollChoices[choiceIndex].votes ++;
 			
 
@@ -66,7 +66,7 @@ class App extends Component{
 
 		return(
 			<div className="App container">
-				<Nav />
+				<Nav user={this.state.authUser}/>
 				{this.currentContent()}
  				
 			</div>
