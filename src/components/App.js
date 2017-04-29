@@ -61,8 +61,9 @@ class App extends Component{
 		return this.state.polls[this.state.currentPoll]
 	}
 
-	addNewPoll(e){
-		console.log(e.target)
+	addNewPoll(poll){
+		console.log(poll)
+		
 		//push new poll into data
 	}
 

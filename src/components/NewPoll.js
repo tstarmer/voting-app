@@ -12,8 +12,7 @@ class NewPoll extends Component{
 // value={} onChange={}
 	parseSubmit = (e) =>{
 		e.preventDefault();
-		console.log(e.target)
-		this.props.onSubmit(e)
+		this.props.onSubmit(this.state)
 
 	}
 
@@ -35,6 +34,7 @@ class NewPoll extends Component{
 					<input type="text" className="description-text" name="description"onChange={this.onChange} value={this.state.description}></input>
 					<h6>Poll Choices</h6>
 					<input type="text" className="choices-text" name="choices" onChange={this.onChange} value={this.state.choices}></input>
+					<br/>
 					<input type="submit" className="btn"></input>
 					<button onClick={this.props.onClose}>Close</button>
 				</form>
