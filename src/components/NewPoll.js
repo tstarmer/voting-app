@@ -17,7 +17,7 @@ class NewPoll extends Component{
 	}
 
 	onChange = (e) =>{
-		console.log(e.target.value)
+		// console.log(e.target.value)
 		this.setState({
 			[e.target.name]:e.target.value
 		})
@@ -35,7 +35,7 @@ class NewPoll extends Component{
 					<h6>Poll Choices</h6>
 					<input type="text" className="choices-text" name="choices" onChange={this.onChange} value={this.state.choices}></input>
 					<br/>
-					<input type="submit" className="btn"></input>
+					<input type="submit" className="btn" value="Submit Poll"></input>
 					<button onClick={this.props.onClose}>Close</button>
 				</form>
 			</div>

@@ -1,0 +1,11 @@
+{
+	"_id":"mortise",
+	// "password": "",
+	"votes":[],
+	"polls":[]
+},
+{
+	"_id":"pheobe",
+	"votes":[],
+	"polls":[]
+}

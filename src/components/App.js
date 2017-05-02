@@ -61,10 +61,33 @@ class App extends Component{
 		return this.state.polls[this.state.currentPoll]
 	}
 
-	addNewPoll(poll){
-		console.log(poll)
+	addNewPoll=(poll)=>{
 		
+		const polls = [...this.state.polls]
+			// console.log("Polls copy", polls)
+		var newPollChoices = poll.choices.split(",")
+			// console.log("choices", newPollChoices)
+		
+		var newOptions = newPollChoices.map(function(item){
+			return {
+				"option":item,
+				"votes": 0
+			}
+		})
+
+		var newPoll = {
+			id: polls.length,
+			title: poll.title,
+			description: poll.description,
+			pollChoices: newOptions 
+
+		}
+			// console.log("new Poll", newPoll)
+		polls.push(newPoll)
+			// console.log("new polls", polls)
+		this.setState({polls:polls})
 		//push new poll into data
+		this.closeClickHandler();
 	}
 
 	
