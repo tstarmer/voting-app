@@ -3,6 +3,7 @@
 		{
 			"id":0,
 			"title": "First Poll",
+			"creatorId": "mortise",
 			"description":"Fancy stuff going on here",
 			"pollChoices":[
 				{
@@ -23,6 +24,7 @@
 		{
 			"id":1,
 			"title": "Second Poll",
+			"creatorId": "mortise",
 			"description":"Cool stuff going on here",
 			"pollChoices":[
 				{
@@ -42,6 +44,7 @@
 		{
 			"id":2,
 			"title": "Yet Another Poll",
+			"creatorId": "pheobe",
 			"description":"What is going on here",
 			"pollChoices":[
 				{

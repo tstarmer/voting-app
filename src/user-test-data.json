@@ -1,11 +1,12 @@
 {
 	"_id":"mortise",
-	// "password": "",
-	"votes":[],
-	"polls":[]
+	"authorized":true,
+	"pollsVoted":[],
+	"pollsCreated":[]
 },
 {
 	"_id":"pheobe",
-	"votes":[],
-	"polls":[]
+	"authorized":true,
+	"pollsVoted":[],
+	"pollsCreated":[]
 }

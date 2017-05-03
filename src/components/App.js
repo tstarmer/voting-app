@@ -5,7 +5,7 @@ import Nav from "./Nav"
 import NewPoll from "./NewPoll"
 
 const pushState = (object, url)=>{
-	console.log("pushing history")
+	// console.log("pushing history")
 	window.history.pushState(object,'',url);
 }
 
@@ -33,8 +33,13 @@ class App extends Component{
 
 	navHandler=(menuItem)=>{
 			// console.log("setting nav")
+		//temporary value for testing purposes
+		if(menuItem = "my-polls"){
+			var currentuser = "mortise"
+		}
 		pushState({currentPoll:menuItem}, `/${menuItem}`)
-		this.setState({currentPoll:menuItem})
+		this.setState({authUser: currentuser,
+			currentPoll:menuItem})
 	}
 
 
@@ -78,6 +83,7 @@ class App extends Component{
 		var newPoll = {
 			id: polls.length,
 			title: poll.title,
+			creatorId: "mortise",
 			description: poll.description,
 			pollChoices: newOptions 
 
@@ -92,14 +98,19 @@ class App extends Component{
 
 	
 	currentContent(){
-		if(this.state.currentPoll || this.state.currentPoll == 0){
+		var currentUser = false;
+		if(this.state.currentPoll === "my-polls"){
+			currentUser = this.state.authUser
+		}
+
+		if((this.state.currentPoll && this.state.currentPoll !=="my-polls") || this.state.currentPoll == 0){
 			// console.log("showing single poll")
 			if(this.state.currentPoll === "new"){
 				return <NewPoll onClose={this.closeClickHandler} onSubmit={this.addNewPoll}/>
 			}
 			return <Poll poll={this.state.polls[this.state.currentPoll]} onClose={this.closeClickHandler} onSubmit={this.submitHandler}/>
 		}
-		return <Polls polls={this.state.polls} clickHandler={this.pollClickHandler}/>
+		return <Polls polls={this.state.polls} clickHandler={this.pollClickHandler} user={currentUser}/>
 	}
 
 	render(){
