@@ -5,7 +5,7 @@ import Nav from "./Nav"
 import NewPoll from "./NewPoll"
 
 const pushState = (object, url)=>{
-	// console.log("pushing history")
+	console.log("pushing history", object)
 	window.history.pushState(object,'',url);
 }
 
@@ -32,14 +32,32 @@ class App extends Component{
 	}
 
 	navHandler=(menuItem)=>{
-			// console.log("setting nav")
+		
+		// console.log("setting nav to ", menuItem)
+		var currentuser = this.state.authUser
 		//temporary value for testing purposes
-		if(menuItem = "my-polls"){
-			var currentuser = "mortise"
+		if(menuItem === "my-polls"){
+			currentuser = "mortise"
 		}
-		pushState({currentPoll:menuItem}, `/${menuItem}`)
+		if(menuItem === "home"){
+			menuItem = ""
+		}
+		pushState({currentPoll:menuItem || null}, `/${menuItem}`)
+			
 		this.setState({authUser: currentuser,
-			currentPoll:menuItem})
+			currentPoll:menuItem || null})
+	
+	}
+
+	userLoginHandler=(loginStatus)=>{
+		
+		if(loginStatus === "logout"){
+			this.setState({authUser:false})			
+		}else{
+			this.setState({authUser:"pheobe"})
+		}
+		//add login form
+
 	}
 
 
@@ -98,9 +116,10 @@ class App extends Component{
 
 	
 	currentContent(){
-		var currentUser = false;
+		var currentUser = false;//switch hard coded to dynamic based on logged in
 		if(this.state.currentPoll === "my-polls"){
-			currentUser = this.state.authUser
+			// currentUser = this.state.authUser
+			currentUser ="mortise"
 		}
 
 		if((this.state.currentPoll && this.state.currentPoll !=="my-polls") || this.state.currentPoll == 0){
@@ -108,16 +127,29 @@ class App extends Component{
 			if(this.state.currentPoll === "new"){
 				return <NewPoll onClose={this.closeClickHandler} onSubmit={this.addNewPoll}/>
 			}
-			return <Poll poll={this.state.polls[this.state.currentPoll]} onClose={this.closeClickHandler} onSubmit={this.submitHandler}/>
+			return <Poll 
+						poll={this.state.polls[this.state.currentPoll]} 
+						onClose={this.closeClickHandler} 
+						onSubmit={this.submitHandler}
+					/>
 		}
-		return <Polls polls={this.state.polls} clickHandler={this.pollClickHandler} user={currentUser}/>
+		return <Polls 
+					polls={this.state.polls} 
+					clickHandler={this.pollClickHandler} 
+					user={currentUser}
+				/>
 	}
 
 	render(){
 
 		return(
 			<div className="App container">
-				<Nav user={this.state.authUser} clickHandler={this.navHandler}/>
+				<Nav 
+					user={this.state.authUser} 
+					clickHandler={this.navHandler} 
+					loginHandler={this.userLoginHandler}
+				/>
+				
 				{this.currentContent()}
  				
 			</div>
