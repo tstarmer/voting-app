@@ -22,16 +22,18 @@ class Login extends Component{
 
 	render(){
 		return(
-			<div className="container">
+			<div className="login-container">
 				<form onSubmit={this.parseSubmit}>
-					<label>User</label>
+					<label>User</label><br/>
+
 					<input 
 						type="text" 
 						name="user" 
 						onChange={this.onChange}
 						value={this.state.user}>
 					</input>
-					<label>Password</label>
+					<br/>
+					<label>Password</label><br/>
 					<input 
 						type="text" 
 						name="password" 

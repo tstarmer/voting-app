@@ -3,6 +3,11 @@ import Poll from "./Poll"
 import Polls from "./Polls"
 import Nav from "./Nav"
 import NewPoll from "./NewPoll"
+import Modals from "./Modals"
+
+/*
+	Refactor Polls to be more self contained(ie poll, polls, newPoll as part of one component)
+*/
 
 const pushState = (object, url)=>{
 	console.log("pushing history", object)
@@ -16,6 +21,7 @@ class App extends Component{
 		this.state={
 			authUser: true,
 			currentPoll: null,
+			activeModal: null,
 			polls:this.props.initialData.polls
 		}
 	}
@@ -44,17 +50,27 @@ class App extends Component{
 		}
 		pushState({currentPoll:menuItem || null}, `/${menuItem}`)
 			
-		this.setState({authUser: currentuser,
-			currentPoll:menuItem || null})
+		this.setState({
+			authUser: currentuser,
+			currentPoll:menuItem || null,
+			activeModal:null
+		})
 	
 	}
 
 	userLoginHandler=(loginStatus)=>{
 		
 		if(loginStatus === "logout"){
-			this.setState({authUser:false})			
+			this.setState({
+				authUser:false,
+				activeModal:null
+			})			
 		}else{
-			this.setState({authUser:"pheobe"})
+			this.setState({
+				//change after auth and db integration
+				authUser:"pheobe",
+				activeModal:loginStatus
+			})
 		}
 		//add login form
 
@@ -144,6 +160,8 @@ class App extends Component{
 
 		return(
 			<div className="App container">
+				{this.state.activeModal && <Modals activeModal={this.state.activeModal}/>}
+				
 				<Nav 
 					user={this.state.authUser} 
 					clickHandler={this.navHandler} 
