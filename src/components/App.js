@@ -95,6 +95,12 @@ class App extends Component{
 		this.setState({polls:polls})
 	}
 
+	closeModal = ()=>{
+		console.log("close the modal")
+		this.setState({
+			activeModal: null
+		})
+	}
 
 	currentPoll(){
 		return this.state.polls[this.state.currentPoll]
@@ -160,7 +166,7 @@ class App extends Component{
 
 		return(
 			<div className="App container">
-				{this.state.activeModal && <Modals activeModal={this.state.activeModal}/>}
+				{this.state.activeModal && <Modals activeModal={this.state.activeModal} closeModal={this.closeModal}/>}
 				
 				<Nav 
 					user={this.state.authUser} 

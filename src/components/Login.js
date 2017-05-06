@@ -4,6 +4,7 @@ class Login extends Component{
 	constructor(props){
 		super(props);
 		this.state={
+			role: "login",
 			user: "Username",
 			password: "Password"
 		}
@@ -11,8 +12,26 @@ class Login extends Component{
 
 	parseSubmit = (e) =>{
 		e.preventDefault();
+		//validate entry
+		let user ={
+			user:e.target.user,
+			//encrypt
+			password:e.target.password
+		}
+
+		this.props.handleLogin({user})		
+
 
 	}
+
+	modalChange(e){
+		this.setState({
+			role:e.target.value
+		})
+
+	}
+
+
 
 	onChange = (e) => {
 		this.setState({
@@ -23,6 +42,8 @@ class Login extends Component{
 	render(){
 		return(
 			<div className="login-container">
+				{/* add register and login side by side */}
+
 				<form onSubmit={this.parseSubmit}>
 					<label>User</label><br/>
 
@@ -40,6 +61,15 @@ class Login extends Component{
 						onChange={this.onChange}
 						value={this.state.password}>
 					</input>
+					<br/>
+					<input type="submit"></input>
+					<button className="btn close" onClick={this.props.closeModal}>Cancel</button>
+					
+					{(this.state.role === "login") && <p> Forget your password? Reset Password Now</p>}
+					{(this.state.role === "login") && <p> Not a member yet? Register below</p>}
+
+					{(this.state.role !== "register")}<button className="btn register" onClick={this.changeModal} value="register">Register</button>
+
 				</form>
 
 			</div>

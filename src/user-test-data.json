@@ -1,11 +1,15 @@
 {
 	"_id":"mortise",
+	"user":"mortise",
+	"pass":"",
 	"authorized":true,
 	"pollsVoted":[],
 	"pollsCreated":[]
 },
 {
 	"_id":"pheobe",
+	"user":"pheobe",
+	"pass":"",
 	"authorized":true,
 	"pollsVoted":[],
 	"pollsCreated":[]
