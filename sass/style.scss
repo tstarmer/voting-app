@@ -96,6 +96,15 @@ p{
 	float:right;
 }
 
+.btn{
+	background-color: lightgreen;
+	border-radius:.5rem;
+	line-height:2rem;
+}
+
+
+
+/* Login Form Styling */
 .modal-overlay{
 	position:absolute;
 	background-color: rgba(55,55,55,0.8);
@@ -103,6 +112,7 @@ p{
 	height:100vh;
 	z-index:10;
 }
+
 
 .login-container{
 	text-align:center;
@@ -112,4 +122,72 @@ p{
 	margin:auto;
 	margin-top: 15%;
 	z-index:15;
+	
+	input {
+		width:80%;
+		max-width:40rem;
+		height:2rem;
+		color:lightgray;
+		margin-bottom: 1.5rem;
+	
+		&.btn{
+			color:black;
+			width:auto;
+
+		}
+
+		&:focus{
+			color:black;
+		}
+
+		&[type="submit"]{
+
+		}
+
+	}
+
+
+
 }
+
+.form-nav{
+	// padding:.75rem;
+	margin-bottom:1.5rem;
+	line-height:3rem;
+	height: 3rem;
+
+	.close{
+		float:right;
+		color:red;
+		width:15%;
+	}
+
+	ul{
+		width:85%;
+		padding:0;
+
+		.active{
+			background-color:whitesmoke;
+		}
+	}
+
+	ul li{
+		width:50%;
+		float:left;
+		list-style-type: none;
+		background-color:lightgray;
+		
+		
+	}
+
+	input{
+		width:80%
+
+	}
+
+}
+
+
+
+
+

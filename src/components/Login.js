@@ -4,29 +4,33 @@ class Login extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			role: "login",
+			role: "Login",
 			user: "Username",
-			password: "Password"
+			email: "Email",
+			password: "Password",
+			toggle: true
 		}
 	}
 
 	parseSubmit = (e) =>{
 		e.preventDefault();
 		//validate entry
+		
+		console.log(e.target)
 		let user ={
 			user:e.target.user,
 			//encrypt
 			password:e.target.password
 		}
 
-		this.props.handleLogin({user})		
-
-
+		// this.props.handleLogin({user})		
 	}
 
-	modalChange(e){
+	modalChange=(e)=>{
+		console.log(e.target, e.target.value, e.target.name)
 		this.setState({
-			role:e.target.value
+			role:e.target.name,
+			toggle:!this.state.toggle
 		})
 
 	}
@@ -43,10 +47,16 @@ class Login extends Component{
 		return(
 			<div className="login-container">
 				{/* add register and login side by side */}
+				<nav className="form-nav">
+					<a className="close" onClick={this.props.closeModal} value="close">X</a>
+					<ul>
+						<li className={this.state.toggle ? "active link" : "link"} onClick={this.modalChange} name="Login" value="Login">Login</li>
+						<li className={!this.state.toggle ? "active link" : "link"}  onClick={this.modalChange} name="Register" value="Register">Register</li>
 
+					</ul>
+				</nav>
+				{(this.state.role !== "reset") &&
 				<form onSubmit={this.parseSubmit}>
-					<label>User</label><br/>
-
 					<input 
 						type="text" 
 						name="user" 
@@ -54,7 +64,15 @@ class Login extends Component{
 						value={this.state.user}>
 					</input>
 					<br/>
-					<label>Password</label><br/>
+					{!this.state.toggle && 
+						// <label>Email</label><br/>
+						<input 
+							type="text" 
+							name="email" 
+							onChange={this.onChange}
+							value={this.state.email}>
+						</input>}
+							
 					<input 
 						type="text" 
 						name="password" 
@@ -62,18 +80,29 @@ class Login extends Component{
 						value={this.state.password}>
 					</input>
 					<br/>
-					<input type="submit"></input>
+					{this.state.toggle && <input type="submit" className="btn submit">Submit</input>}
+					{!this.state.toggle && <input type="submit" className="btn submit">Submit</input>}
+
 					<button className="btn close" onClick={this.props.closeModal}>Cancel</button>
 					
-					{(this.state.role === "login") && <p> Forget your password? Reset Password Now</p>}
-					{(this.state.role === "login") && <p> Not a member yet? Register below</p>}
+					{this.state.toggle && <p> Forget your password? Reset Password Now</p>}
+					
+					{this.state.toggle && <a className="link" onClick={this.changeModal} value="Reset">Reset</a>}
+				</form>}
 
-					{(this.state.role !== "register")}<button className="btn register" onClick={this.changeModal} value="register">Register</button>
+				{(this.state.role === "reset") && <form>
+					<input 
+						type="text" 
+						name="email" 
+						onChange={this.onChange}
+						value={this.state.email}>
+					</input>
 
-				</form>
+					<input type="submit">Reset Password</input>
+				</form>}
 
 			</div>
-			)
+		)
 	}
 
 }

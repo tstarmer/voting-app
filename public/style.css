@@ -71,6 +71,12 @@ p {
   width: 50%;
   float: right; }
 
+.btn {
+  background-color: lightgreen;
+  border-radius: .5rem;
+  line-height: 2rem; }
+
+/* Login Form Styling */
 .modal-overlay {
   position: absolute;
   background-color: rgba(55, 55, 55, 0.8);
@@ -86,3 +92,35 @@ p {
   margin: auto;
   margin-top: 15%;
   z-index: 15; }
+  .login-container input {
+    width: 80%;
+    max-width: 40rem;
+    height: 2rem;
+    color: lightgray;
+    margin-bottom: 1.5rem; }
+    .login-container input.btn {
+      color: black;
+      width: auto; }
+    .login-container input:focus {
+      color: black; }
+
+.form-nav {
+  margin-bottom: 1.5rem;
+  line-height: 3rem;
+  height: 3rem; }
+  .form-nav .close {
+    float: right;
+    color: red;
+    width: 15%; }
+  .form-nav ul {
+    width: 85%;
+    padding: 0; }
+    .form-nav ul .active {
+      background-color: whitesmoke; }
+  .form-nav ul li {
+    width: 50%;
+    float: left;
+    list-style-type: none;
+    background-color: lightgray; }
+  .form-nav input {
+    width: 80%; }
