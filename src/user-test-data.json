@@ -1,5 +1,4 @@
-{
-	"_id":"mortise",
+[{
 	"user":"mortise",
 	"pass":"",
 	"authorized":true,
@@ -7,10 +6,9 @@
 	"pollsCreated":[]
 },
 {
-	"_id":"pheobe",
 	"user":"pheobe",
 	"pass":"",
 	"authorized":true,
 	"pollsVoted":[],
 	"pollsCreated":[]
-}
+}]
