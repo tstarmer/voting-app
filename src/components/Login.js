@@ -27,9 +27,9 @@ class Login extends Component{
 	}
 
 	modalChange=(e)=>{
-		console.log(e.target, e.target.value, e.target.name)
+		console.log("e", e.target, "text", e.target.text, "value", e.target.value,"name", e.target.name)
 		this.setState({
-			role:e.target.name,
+			role:e.target.id,
 			toggle:!this.state.toggle
 		})
 
@@ -50,8 +50,8 @@ class Login extends Component{
 				<nav className="form-nav">
 					<a className="close" onClick={this.props.closeModal} value="close">X</a>
 					<ul>
-						<li className={this.state.toggle ? "active link" : "link"} onClick={this.modalChange} name="Login" value="Login">Login</li>
-						<li className={!this.state.toggle ? "active link" : "link"}  onClick={this.modalChange} name="Register" value="Register">Register</li>
+						<li className={this.state.toggle ? "active link" : "link"} onClick={this.modalChange} id="Login">Login</li>
+						<li className={!this.state.toggle ? "active link" : "link"}  onClick={this.modalChange} id="Register">Register</li>
 
 					</ul>
 				</nav>
@@ -80,11 +80,11 @@ class Login extends Component{
 						value={this.state.password}>
 					</input>
 					<br/>
-					{this.state.toggle && <input type="submit" className="btn submit">Submit</input>}
-					{!this.state.toggle && <input type="submit" className="btn submit">Submit</input>}
+					<div className="row">
+						<input type="submit" className="btn submit" value={this.state.role}></input>
+						<button className="btn close" onClick={this.props.closeModal}>Cancel</button>
+					</div>	
 
-					<button className="btn close" onClick={this.props.closeModal}>Cancel</button>
-					
 					{this.state.toggle && <p> Forget your password? Reset Password Now</p>}
 					
 					{this.state.toggle && <a className="link" onClick={this.changeModal} value="Reset">Reset</a>}
