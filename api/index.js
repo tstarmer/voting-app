@@ -26,12 +26,13 @@ router.get('/polls',(req,res)=>{
 // Database endpoints e.g. api/users, api/polls
 
 router.get('/users', (req, res)=>{
+	console.log("getting users")
 	//db connect
 	MongoClient.connect(mongoUri, function(err,db){
 	if(err){
             console.log(err)
         }else{
-        	var usersdb = db.collections('users')
+        	var usersdb = db.collection('users')
 
         	usersdb.find({}).toArray(function(err, docs){
         		if(err){
