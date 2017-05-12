@@ -108,11 +108,6 @@ router.get("/polls/user/*", (req,res)=>{
 /*Data update routes*/
 /*Update userdb: userID= ,key= , value=*/
 
-/* In Progress
-
-router.post("/user/*", (req,res)=>{
-    var userId = req.params[0]
-
     MongoClient.connect(mongoUri,function(err,db)){
         if(err){
             console.log(err)

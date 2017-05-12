@@ -60,7 +60,6 @@ class Login extends Component{
 						</input>
 						<br/>
 						{!this.state.toggle && 
-							// <label>Email</label><br/>
 							<input 
 								type="text" 
 								name="email" 
