@@ -15,14 +15,12 @@ class Login extends Component{
 	parseSubmit = (e) =>{
 		e.preventDefault();
 		//validate entry
-		
-		console.log(e.target)
+			console.log(e.target)
 		let user ={
 			user:e.target.user,
 			//encrypt
 			password:e.target.password
 		}
-
 		// this.props.handleLogin({user})		
 	}
 
@@ -34,8 +32,6 @@ class Login extends Component{
 		})
 
 	}
-
-
 
 	onChange = (e) => {
 		this.setState({
@@ -52,43 +48,55 @@ class Login extends Component{
 					<ul>
 						<li className={this.state.toggle ? "active link" : "link"} onClick={this.modalChange} id="Login">Login</li>
 						<li className={!this.state.toggle ? "active link" : "link"}  onClick={this.modalChange} id="Register">Register</li>
-
 					</ul>
 				</nav>
 				{(this.state.role !== "reset") &&
-				<form onSubmit={this.parseSubmit}>
-					<input 
-						type="text" 
-						name="user" 
-						onChange={this.onChange}
-						value={this.state.user}>
-					</input>
-					<br/>
-					{!this.state.toggle && 
-						// <label>Email</label><br/>
+					<form onSubmit={this.parseSubmit}>
 						<input 
 							type="text" 
-							name="email" 
+							name="user" 
 							onChange={this.onChange}
-							value={this.state.email}>
-						</input>}
-							
-					<input 
-						type="text" 
-						name="password" 
-						onChange={this.onChange}
-						value={this.state.password}>
-					</input>
-					<br/>
-					<div className="row">
-						<input type="submit" className="btn submit" value={this.state.role}></input>
-						<button className="btn close" onClick={this.props.closeModal}>Cancel</button>
-					</div>	
+							value={this.state.user}>
+						</input>
+						<br/>
+						{!this.state.toggle && 
+							// <label>Email</label><br/>
+							<input 
+								type="text" 
+								name="email" 
+								onChange={this.onChange}
+								value={this.state.email}>
+							</input>
+						}						
+						<input 
+							type="text" 
+							name="password" 
+							onChange={this.onChange}
+							value={this.state.password}>
+						</input>
+						<br/>
+						<div className="row">
+							<input 
+								type="submit" 
+								className="btn submit" 
+								value={this.state.role}
+							>
+							</input>
+							<button 
+								className="btn close" 
+								onClick={this.props.closeModal}>
+								Cancel
+							</button>
+						</div>	
 
-					{this.state.toggle && <p> Forget your password? Reset Password Now</p>}
-					
-					{this.state.toggle && <a className="link" onClick={this.changeModal} value="Reset">Reset</a>}
-				</form>}
+						{this.state.toggle && 
+							<p> Forget your password? Reset Password Now</p>
+						}
+						
+						{this.state.toggle && <a className="link" onClick={this.changeModal} value="Reset">Reset</a>
+						}
+					</form>
+				}
 
 				{(this.state.role === "reset") && <form>
 					<input 

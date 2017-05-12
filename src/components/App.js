@@ -22,7 +22,7 @@ class App extends Component{
 			authUser: true,
 			currentPoll: null,
 			activeModal: null,
-			polls:this.props.initialData.polls
+			polls:this.props.initialData
 		}
 	}
 
