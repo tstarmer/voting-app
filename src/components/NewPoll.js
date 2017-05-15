@@ -9,11 +9,10 @@ class NewPoll extends Component{
 			choices:"choices...."
 		}
 	}
-// value={} onChange={}
+
 	parseSubmit = (e) =>{
 		e.preventDefault();
 		this.props.onSubmit(this.state)
-
 	}
 
 	onChange = (e) =>{
@@ -26,21 +25,37 @@ class NewPoll extends Component{
 	render(){
 		return(
 			<div className="container">
-				
 				<form onSubmit={this.parseSubmit}>	
 					<h4>Poll Title</h4>
-					<input type="text" className="title" name="title" onChange={this.onChange} value={this.state.title}></input>
+					<input type="text" 
+						className="title" 
+						name="title" 
+						nChange={this.onChange} 
+						value={this.state.title}>
+					</input>
 					<h6>Poll Description</h6>
-					<input type="text" className="description-text" name="description"onChange={this.onChange} value={this.state.description}></input>
+					<input type="text" 
+						className="description-text" 
+						name="description"
+						onChange={this.onChange} 
+						value={this.state.description}>
+					</input>
 					<h6>Poll Choices</h6>
-					<input type="text" className="choices-text" name="choices" onChange={this.onChange} value={this.state.choices}></input>
+					<input type="text" 
+						className="choices-text" 
+						name="choices" 
+						onChange={this.onChange} 
+						value={this.state.choices}>
+					</input>
 					<br/>
-					<input type="submit" className="btn" value="Submit Poll"></input>
+					<input type="submit" 
+						className="btn" 
+						value="Submit Poll">
+					</input>
 					<button onClick={this.props.onClose}>Close</button>
 				</form>
 			</div>
-
-			)
+		)
 	}
 }
 

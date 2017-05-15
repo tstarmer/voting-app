@@ -24,13 +24,11 @@ class Modals extends Component{
 				{(this.state.currentModal === "login") && 
 					<Login 
 						closeModal={this.props.closeModal} 
-						handleLogin={this.props.login}/>}
+						handleLogin={this.props.login}/>
+				}
 
 			</div>
-
-			
-
-			)
+		)
 	}
 }
 

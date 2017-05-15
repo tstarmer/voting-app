@@ -2,6 +2,9 @@
 * {
   box-sizing: border-box; }
 
+li {
+  list-style-type: none; }
+
 /* Form reset */
 input,
 label,
@@ -17,11 +20,10 @@ textarea {
   background: none;
   line-height: 1; }
 
-/* End reset */
-li {
-  list-style-type: none; }
+/* End form reset */
+/* Info
 
-/* 
+Typography 
 	
     font-family: 'Ubuntu', sans-serif;
 
@@ -87,12 +89,16 @@ p {
   width: 50%;
   float: right; }
 
+.link, button, nav ul li, .polls-list li {
+  cursor: pointer; }
+
 .btn {
   border-radius: .5rem;
   line-height: 1.5rem;
   background-color: lightblue;
   padding: .25rem;
-  height: 2rem; }
+  height: 2rem;
+  cursor: pointer; }
 
 /* Login Form Styling */
 .modal-overlay {
@@ -139,6 +145,7 @@ p {
     width: 50%;
     float: left;
     list-style-type: none;
-    background-color: lightgray; }
+    background-color: lightgray;
+    cursor: pointer; }
   .form-nav input {
     width: 80%; }

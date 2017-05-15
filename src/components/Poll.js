@@ -27,7 +27,13 @@ class Poll extends Component{
 					<form onSubmit={(e)=>{this.handleSubmit(e)}}>
 						<select name="choices">
 							{this.props.poll.pollChoices.map((choice,i)=>{
-								return <option key={i} className="voting-option" id={i} value={choice.option}>{choice.option}</option>
+								return <option 
+									key={i} 
+									className="voting-option" 
+									id={i} 
+									value={choice.option}>
+									{choice.option}
+									</option>
 							
 							})}
 							
@@ -43,9 +49,8 @@ class Poll extends Component{
 				<Results poll={this.props.poll}/>
 			</div>
 
-			)
+		)
 	}
 }
-
 
 export default Poll

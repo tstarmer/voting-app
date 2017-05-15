@@ -4,6 +4,9 @@
 	box-sizing:border-box;
 }
 
+li{
+	list-style-type: none;
+}
 
 /* Form reset */
 
@@ -26,11 +29,11 @@ textarea
 
 
 
-/* End reset */
-li{
-	list-style-type: none;
-}
-/* 
+/* End form reset */
+
+/* Info
+
+Typography 
 	
     font-family: 'Ubuntu', sans-serif;
 
@@ -38,6 +41,7 @@ li{
 
 
  */
+
 
 .App{
 	text-align:center;
@@ -118,12 +122,18 @@ p{
 	float:right;
 }
 
+
+.link, button, nav ul li, .polls-list li {
+	cursor: pointer;
+}
+
 .btn{
 	border-radius: .5rem;
   	line-height: 1.5rem; 
   	background-color:lightblue;
   	padding: .25rem;
   	height:2rem;
+  	cursor: pointer;
 }
 
 
@@ -200,6 +210,7 @@ p{
 		float:left;
 		list-style-type: none;
 		background-color:lightgray;
+		cursor: pointer;
 		
 		
 	}

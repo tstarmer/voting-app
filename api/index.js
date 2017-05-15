@@ -1,28 +1,26 @@
 import express from 'express';
 import data from '../src/test-poll-data';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 import config from "../config"
 
 const mongoUri = config.mongodbUri
-
-// const polls = data.polls
 
 const router = express.Router();
 
 // Database endpoints e.g. api/users, api/polls
 /*General lookups*/
 router.get('/polls',(req,res)=>{
-	// console.log(data)
-	// res.send({polls: data})
+
 	MongoClient.connect(mongoUri, function(err,db){
+        console.log("getting polls")
 	if(err){
-            console.log(err)
+            console.log("polls error 1 ", err)
         }else{
         	var pollsdb = db.collection('polls')
 
         	pollsdb.find({}).toArray(function(err, docs){
         		if(err){
-        			console.log(err)
+        			console.log("polls error 2 ", err)
         		}else{
         			res.send(docs)
         			db.close();
@@ -55,28 +53,54 @@ router.get('/users', (req, res)=>{
 
 /*Database query end points */
 /*Specific End points*/
+
+/*Individual Polls*/
+router.get('/polls/:pollId', (req,res)=>{
+    var pollId =  parseInt(req.params.pollId)
+
+    console.log("pollId", pollId)
+
+    MongoClient.connect(mongoUri, function(err,db){
+        if(err){
+            console.log(err)
+        }else{
+            var pollsdb = db.collection('polls')
+
+            pollsdb.findOne({id:pollId}, function(err,doc){
+                if(err){
+                    console.log(err)
+                }else{
+                    console.log("doc", doc)
+                    res.send(doc)
+                    db.close
+                }
+            })
+               
+            db.close()          
+        }
+    })
+})
+
 /*Individual User lookup; e.g. for profile page*/
-router.get("/user/*", (req,res)=>{
-    console.log("looking up user", req.params[0])
-    
-    var userId = req.params[0]
+router.get("/user/:userId", (req,res)=>{
+        
+    var userId = req.params.userId
 
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
                 console.log(err)
-            }else{
-                var usersdb = db.collection('users')
+        }else{
+            var usersdb = db.collection('users')
 
-                usersdb.find({id:userId}).toArray(function(err, docs){
-                    if(err){
-                        console.log(err)
-                    }else{
-                        res.send(docs)
-                        db.close();
-                    } 
-                })
-            }
-        })
+            usersdb.findOne({id:userId}).toArray(function(err, docs){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.send(docs)
+                    db.close();
+                } 
+            })
+        }
     })
 })
 
@@ -89,36 +113,44 @@ router.get("/polls/user/*", (req,res)=>{
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
                 console.log(err)
-            }else{
-                var usersdb = db.collection('polls')
+        }else{
+            var usersdb = db.collection('polls')
 
-                usersdb.find({creatorId:userId}).toArray(function(err, docs){
-                    if(err){
-                        console.log(err)
-                    }else{
-                        res.send(docs)
-                        db.close();
-                    }  
-                })
-            }
-        })
+            usersdb.find({creatorId:userId}).toArray(function(err, docs){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.send(docs)
+                    db.close();
+                }  
+            })
+        }
     })
 })
 
 /*Data update routes*/
 /*Update userdb: userID= ,key= , value=*/
 
-    MongoClient.connect(mongoUri,function(err,db)){
+/*
+router.post("/user/:userId-:key-:value", (req,res)=>{
+    var userId = req.params.userId
+    var key = req.params.key
+    var value = req.params.value
+    
+    MongoClient.connect(mongoUri,function(err,db){
         if(err){
             console.log(err)
         }else{
             var usersdb = db.collections('users')
 
             usersdb.update({user:userId},{
-            	[key]:value
+                [key]:value
             })
+
+            db.close();
         }
-    }
-})
+    })
+}) 
+    
 */
 export default router;

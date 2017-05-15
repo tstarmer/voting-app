@@ -12,5 +12,9 @@ export const logStars = function(message) {
 
 export default{
 	mongodbUri:'mongodb://localhost:27017/voteapp',
-	port: env.PORT || 8080
+	port: env.PORT || 8080,
+	host: env.HOST || 'localhost',
+	get serverUrl(){
+		return `http://${this.host}:${this.port}`
+	}
 };

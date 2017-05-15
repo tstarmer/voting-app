@@ -14,13 +14,12 @@ const pushState = (object, url)=>{
 	window.history.pushState(object,'',url);
 }
 
-
 class App extends Component{
 	constructor(props){
 		super(props);
 		this.state={
 			authUser: true,
-			currentPoll: null,
+			currentPoll: this.props.currentPoll,
 			activeModal: null,
 			polls:this.props.initialData
 		}
@@ -73,9 +72,7 @@ class App extends Component{
 			})
 		}
 		//add login form
-
 	}
-
 
 	submitHandler=(id, option)=>{
 			
@@ -147,8 +144,13 @@ class App extends Component{
 		if((this.state.currentPoll && this.state.currentPoll !=="my-polls") || this.state.currentPoll == 0){
 			// console.log("showing single poll")
 			if(this.state.currentPoll === "new"){
-				return <NewPoll onClose={this.closeClickHandler} onSubmit={this.addNewPoll}/>
+
+				return <NewPoll 
+					onClose={this.closeClickHandler} 
+					onSubmit={this.addNewPoll}
+					/>
 			}
+				console.log("single poll", this.state.polls[this.state.currentPoll])
 			return <Poll 
 						poll={this.state.polls[this.state.currentPoll]} 
 						onClose={this.closeClickHandler} 
