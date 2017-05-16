@@ -13,6 +13,7 @@ router.get('/polls',(req,res)=>{
 
 	MongoClient.connect(mongoUri, function(err,db){
         console.log("getting polls")
+        console.log("error?", err)
 	if(err){
             console.log("polls error 1 ", err)
         }else{
@@ -22,6 +23,7 @@ router.get('/polls',(req,res)=>{
         		if(err){
         			console.log("polls error 2 ", err)
         		}else{
+                    console.log("polls received")
         			res.send(docs)
         			db.close();
         		}   		

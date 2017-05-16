@@ -18,11 +18,8 @@ server.set("view engine", "ejs")
 server.get([ '/', '/polls/:pollId' ], (req,res)=>{
 
 	serverRender(req.params.pollId, function(content, initialData){
-		console.log("server content", content)
-		console.log("data", initialData)
 		res.render('index', {content:content, initialData:initialData})
 	})
-	
 })
 
 server.use('/api', apiRouter)

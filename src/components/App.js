@@ -10,7 +10,7 @@ import Modals from "./Modals"
 */
 
 const pushState = (object, url)=>{
-	console.log("pushing history", object)
+	// console.log("pushing history", object)
 	window.history.pushState(object,'',url);
 }
 
@@ -38,7 +38,6 @@ class App extends Component{
 
 	navHandler=(menuItem)=>{
 		
-		// console.log("setting nav to ", menuItem)
 		var currentuser = this.state.authUser
 		//temporary value for testing purposes
 		if(menuItem === "my-polls"){
