@@ -4,7 +4,7 @@ import Polls from "./Polls"
 import Nav from "./Nav"
 import NewPoll from "./NewPoll"
 import Modals from "./Modals"
-
+import dataConnect from "../dataConnect.js"
 /*
 	Refactor Polls to be more self contained(ie poll, polls, newPoll as part of one component)
 */
@@ -33,7 +33,6 @@ class App extends Component{
 	closeClickHandler = ()=>{
 		pushState({currentPoll: null},"/")
 		this.setState({currentPoll:null})
-
 	}
 
 	navHandler=(menuItem)=>{
@@ -53,7 +52,6 @@ class App extends Component{
 			currentPoll:menuItem || null,
 			activeModal:null
 		})
-	
 	}
 
 	userLoginHandler=(loginStatus)=>{
@@ -70,22 +68,18 @@ class App extends Component{
 				activeModal:loginStatus
 			})
 		}
-		//add login form
 	}
 
 	submitHandler=(id, option)=>{
 			
 		const polls = [...this.state.polls];
-			// console.log(polls)
 		
 		var pollToChange = polls[id]
-			// console.log("poll", pollToChange)
+			
 		var choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
 			return element.option === option
 		})
-			// console.log("choicei", choiceIndex)
-			// console.log("v before", (pollToChange.pollChoices[choiceIndex].votes))
-		pollToChange.pollChoices[choiceIndex].votes ++;
+			pollToChange.pollChoices[choiceIndex].votes ++;
 			
 
 		this.setState({polls:polls})
@@ -105,10 +99,9 @@ class App extends Component{
 	addNewPoll=(poll)=>{
 		
 		const polls = [...this.state.polls]
-			// console.log("Polls copy", polls)
+			
 		var newPollChoices = poll.choices.split(",")
-			// console.log("choices", newPollChoices)
-		
+
 		var newOptions = newPollChoices.map(function(item){
 			return {
 				"option":item,
@@ -124,11 +117,11 @@ class App extends Component{
 			pollChoices: newOptions 
 
 		}
-			// console.log("new Poll", newPoll)
+			
 		polls.push(newPoll)
-			// console.log("new polls", polls)
+			
 		this.setState({polls:polls})
-		//push new poll into data
+		
 		this.closeClickHandler();
 	}
 
@@ -182,6 +175,5 @@ class App extends Component{
 		);
 	}
 }
-
 
 export default App;
