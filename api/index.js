@@ -153,9 +153,55 @@ router.post("/user/:userId-:key-:value", (req,res)=>{
         }
     })
 }) 
+*/
+/* Update poll */
+router.post("/polls/:pollId-:key-:value", (req,res)=>{
+    var pollId = req.params.pollId
+    var key = req.params.key
+    var value = req.params.value
+    
+    MongoClient.connect(mongoUri,function(err,db){
+        if(err){
+            console.log(err)
+        }else{
+            var polldb = db.collections('polls')
 
-// /polls/:pollid
+            polldb.update({id:id},{
+                $set:{
+                    [key]:value
+                }
+            })
+        }
+    })
+}) 
+
+/* Vote on Poll */
+
+router.post("/polls/:id/:choice", (req,res)=>{
+    var id = req.params.id
+    var choice = req.params.choice
+
+    MongoClient.connect(mongoUri,function(err,db){
+        if(err){
+            console.log(err)
+        }else{
+            var polldb = db.collections('polls')
+
+            polldb.update({id:id},{
+                $set:{
+                    pollChoices[choice]{
+                        votes:value
+                    }
+                }
+            })
+
+            db.close();
+        }
+    })
+})
+
+})
 
     
-*/
+
 export default router;

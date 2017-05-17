@@ -75,12 +75,13 @@ class Login extends Component{
 						</input>
 						<br/>
 						<div className="row">
-							<input 
+							<button 
 								type="submit" 
 								className="btn submit" 
 								value={this.state.role}
 							>
-							</input>
+							Submit
+							</button>
 							<button 
 								className="btn close" 
 								onClick={this.props.closeModal}>

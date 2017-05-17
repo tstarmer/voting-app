@@ -86,7 +86,7 @@ class App extends Component{
 	}
 
 	closeModal = ()=>{
-		console.log("close the modal")
+		// console.log("close the modal")
 		this.setState({
 			activeModal: null
 		})
@@ -142,7 +142,6 @@ class App extends Component{
 					onSubmit={this.addNewPoll}
 					/>
 			}
-				console.log("single poll", this.state.polls[this.state.currentPoll])
 			return <Poll 
 						poll={this.state.polls[this.state.currentPoll]} 
 						onClose={this.closeClickHandler} 

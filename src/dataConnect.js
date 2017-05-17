@@ -9,8 +9,6 @@ const dataConnect = { }
 
 */
 
-
-
 const pollsRoute = `${config.serverUrl}/api/polls`
 
 
