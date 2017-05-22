@@ -177,7 +177,7 @@ router.post("/polls/:pollId-:key-:value", (req,res)=>{
 
 /* Vote on Poll */
 
-router.post("/polls/:id/:choice", (req,res)=>{
+router.post("/polls/:id/:choice-:value", (req,res)=>{
     var id = req.params.id
     var choice = req.params.choice
 
@@ -187,21 +187,16 @@ router.post("/polls/:id/:choice", (req,res)=>{
         }else{
             var polldb = db.collections('polls')
 
-            polldb.update({id:id},{
+            polldb.update({id:id, pollChoices:{option:choice}},{
                 $set:{
-                    pollChoices[choice]{
-                        votes:value
-                    }
+                    votes:value
                 }
+                
             })
 
             db.close();
         }
     })
 })
-
-})
-
-    
 
 export default router;

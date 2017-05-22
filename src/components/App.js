@@ -79,10 +79,16 @@ class App extends Component{
 		var choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
 			return element.option === option
 		})
-			pollToChange.pollChoices[choiceIndex].votes ++;
-			
+			// pollToChange.pollChoices[choiceIndex].votes ++;
+		
+		let votes = pollToChange.pollChoices[choiceIndex].votes	
 
+		votes ++;
+		
 		this.setState({polls:polls})
+
+		dataConnect.vote(id, option, votes)
+
 	}
 
 	closeModal = ()=>{

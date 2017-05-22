@@ -27,8 +27,18 @@ dataConnect.delete = (id, key , value) =>{
 
 }
 
-dataConnect.vote = (id, choice) =>{
-
+dataConnect.vote = (id, choice, votes) =>{
+	const updateRoute = `/${id}/&choice=${choice}&value=${votes}`
+	const options = {
+		hostname:`${pollsRoute}`,
+		port:config.port,
+		path:`/${updateRoute}`,
+		method: 'POST'
+	}
+	
+	http.request(options, (res)=>{
+		console.log(res)
+	})
 }
 
 export default dataConnect
