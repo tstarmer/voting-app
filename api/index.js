@@ -13,7 +13,7 @@ router.get('/polls',(req,res)=>{
 
 	MongoClient.connect(mongoUri, function(err,db){
         console.log("getting polls")
-        console.log("error?", err)
+        
 	if(err){
             console.log("polls error 1 ", err)
         }else{
@@ -23,8 +23,7 @@ router.get('/polls',(req,res)=>{
         		if(err){
         			console.log("polls error 2 ", err)
         		}else{
-                    console.log("polls received")
-        			res.send(docs)
+         			res.send(docs)
         			db.close();
         		}   		
         	})
@@ -177,7 +176,15 @@ router.post("/polls/:pollId-:key-:value", (req,res)=>{
 
 /* Vote on Poll */
 
-router.post("/polls/:id/:choice-:value", (req,res)=>{
+router.put("/polls/*", (req,res)=>{
+    res.send("received put request")
+
+    console.log(req.body)
+
+})
+
+router.put("/polls/:id/:choice/:value", (req,res)=>{
+    console.log("vote recieved")
     var id = req.params.id
     var choice = req.params.choice
 
@@ -193,8 +200,9 @@ router.post("/polls/:id/:choice-:value", (req,res)=>{
                 }
                 
             })
-
+                res.send("updating votes")
             db.close();
+
         }
     })
 })

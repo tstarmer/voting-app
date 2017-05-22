@@ -28,16 +28,23 @@ dataConnect.delete = (id, key , value) =>{
 }
 
 dataConnect.vote = (id, choice, votes) =>{
-	const updateRoute = `/${id}/&choice=${choice}&value=${votes}`
+	console.log(`"voting: id =${id} choice =${choice} votes= ${votes}`)
+	const updateRoute = `/${id}/${choice}/${votes}`
+		console.log("Route", updateRoute)
+		console.log(`postroute: ${pollsRoute}${updateRoute}`)
+
 	const options = {
 		hostname:`${pollsRoute}`,
 		port:config.port,
-		path:`/${updateRoute}`,
-		method: 'POST'
+		path:`${updateRoute}`,
+		method: 'PUT'
 	}
+	console.log(`Options:`, options)
 	
 	http.request(options, (res)=>{
-		console.log(res)
+		console.log("posting votes")//not seeing this yet
+		console.log(`Server status ${res.statusCode}`)
+		console.log(`Response headers ${res.headers}`)
 	})
 }
 

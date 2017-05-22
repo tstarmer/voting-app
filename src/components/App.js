@@ -71,19 +71,24 @@ class App extends Component{
 	}
 
 	submitHandler=(id, option)=>{
-			
+			// console.log("id = ", id, "option = ", option)
 		const polls = [...this.state.polls];
+			console.log("polls before", polls)
 		
 		var pollToChange = polls[id]
 			
 		var choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
 			return element.option === option
 		})
-			// pollToChange.pollChoices[choiceIndex].votes ++;
 		
-		let votes = pollToChange.pollChoices[choiceIndex].votes	
+		pollToChange.pollChoices[choiceIndex].votes ++;
 
-		votes ++;
+		let votes = pollToChange.pollChoices[choiceIndex].votes	
+		console.log("current Votes", votes)
+
+		// console.log("new votes", votes)
+		console.log("polls after ", polls)	
+			
 		
 		this.setState({polls:polls})
 

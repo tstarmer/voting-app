@@ -22,6 +22,10 @@ server.get([ '/', '/polls/:pollId' ], (req,res)=>{
 	})
 })
 
+server.put('/polls/*', (req,res)=>{
+	console.log("Server.js says put request made")
+})
+
 server.use('/api', apiRouter)
 
 server.use(express.static('public'));
