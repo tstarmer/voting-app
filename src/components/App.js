@@ -170,7 +170,9 @@ class App extends Component{
 
 		return(
 			<div className="App container">
-				{this.state.activeModal && <Modals activeModal={this.state.activeModal} closeModal={this.closeModal}/>}
+				{this.state.activeModal && 
+					<Modals activeModal={this.state.activeModal} 
+					closeModal={this.closeModal}/>}
 				
 				<Nav 
 					user={this.state.authUser} 

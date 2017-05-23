@@ -1,5 +1,6 @@
 import config from "../config";
 import http from 'http'
+import querystring from 'querystring'
 
 const dataConnect = { } 
 /*polls*/
@@ -8,9 +9,8 @@ const dataConnect = { }
 
 
 */
-
+// const host = config.host
 const pollsRoute = `${config.serverUrl}/api/polls`
-
 
 dataConnect.update = (id, key, value) =>{
 	let updateRoute = `?id=${id}&key=${key}&value=${value}`
@@ -28,24 +28,39 @@ dataConnect.delete = (id, key , value) =>{
 }
 
 dataConnect.vote = (id, choice, votes) =>{
-	console.log(`"voting: id =${id} choice =${choice} votes= ${votes}`)
-	const updateRoute = `/${id}/${choice}/${votes}`
-		console.log("Route", updateRoute)
-		console.log(`postroute: ${pollsRoute}${updateRoute}`)
+		console.log(`"voting: id =${id} choice =${choice} votes= ${votes}`)
+
+	const data = JSON.stringify({
+		id: id,
+		choice: choice,
+		votes:votes
+	})
+	const headers={
+		'Content-Type': 'application/json',
+		'Content-Length': data.length
+	}
 
 	const options = {
-		hostname:`${pollsRoute}`,
+		hostname:config.host,
 		port:config.port,
-		path:`${updateRoute}`,
-		method: 'PUT'
+		path:`/api/polls/1`,
+		method: 'PUT',
+		headers: headers
+		/*body:{
+			id: id,
+			choice: choice,
+			votes: votes
+		}*/
 	}
-	console.log(`Options:`, options)
-	
-	http.request(options, (res)=>{
-		console.log("posting votes")//not seeing this yet
-		console.log(`Server status ${res.statusCode}`)
-		console.log(`Response headers ${res.headers}`)
+
+	const req = http.request(options, (res)=>{
+		console.log("put request made")
+		console.log("response", res)
 	})
+
+	req.write(data)
+	req.end()
+	
 }
 
 export default dataConnect

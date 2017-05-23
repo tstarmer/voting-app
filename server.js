@@ -22,9 +22,10 @@ server.get([ '/', '/polls/:pollId' ], (req,res)=>{
 	})
 })
 
-server.put('/polls/*', (req,res)=>{
+/*server.put('/polls/*', (req,res)=>{
+	res.send("server.js put request")
 	console.log("Server.js says put request made")
-})
+})*/
 
 server.use('/api', apiRouter)
 
