@@ -4,18 +4,13 @@ import { MongoClient, ObjectID } from 'mongodb';
 import config from "../config"
 import bodyParser from 'body-parser'
 
-
 const mongoUri = config.mongodbUri
-
 const router = express.Router();
-
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended:false}))
-
 // Database endpoints e.g. api/users, api/polls
 /*General lookups*/
 router.get('/polls',(req,res)=>{
-
 	MongoClient.connect(mongoUri, function(err,db){
         console.log("getting polls")
         
@@ -37,8 +32,7 @@ router.get('/polls',(req,res)=>{
 })
 
 router.get('/users', (req, res)=>{
-	console.log("getting users")
-	//db connect
+	//console.log("getting users")
 	MongoClient.connect(mongoUri, function(err,db){
 	if(err){
             console.log(err)
@@ -63,9 +57,6 @@ router.get('/users', (req, res)=>{
 /*Individual Polls*/
 router.get('/polls/:pollId', (req,res)=>{
     var pollId =  parseInt(req.params.pollId)
-
-    console.log("pollId", pollId)
-
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
             console.log(err)
@@ -80,18 +71,15 @@ router.get('/polls/:pollId', (req,res)=>{
                     res.send(doc)
                     db.close
                 }
-            })
-               
+            }) 
             db.close()          
         }
     })
 })
 
 /*Individual User lookup; e.g. for profile page*/
-router.get("/user/:userId", (req,res)=>{
-        
+router.get("/user/:userId", (req,res)=>{ 
     var userId = req.params.userId
-
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
                 console.log(err)
@@ -112,10 +100,7 @@ router.get("/user/:userId", (req,res)=>{
 
 /*Polls by User; polls by user lookup*/
 router.get("/polls/user/*", (req,res)=>{
-    console.log("looking up user", req.params[0])
-    
     var userId = req.params[0]
-
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
                 console.log(err)
@@ -133,58 +118,36 @@ router.get("/polls/user/*", (req,res)=>{
         }
     })
 })
-
 /*Data update routes*/
-/*Update userdb: userID= ,key= , value=*/
 
-/* Update poll */
-/*router.post("/polls/:pollId-:key-:value", (req,res)=>{
-    var pollId = req.params.pollId
-    var key = req.params.key
-    var value = req.params.value
-    
+router.post("/polls", (req,res)=>{
+    //console.log("post body", req.body)
+    let poll = req.body
     MongoClient.connect(mongoUri,function(err,db){
         if(err){
-            console.log(err)
+            console.log("Connect error", err)
         }else{
-            var polldb = db.collections('polls')
-
-            polldb.update({id:id},{
-                $set:{
-                    [key]:value
-                }
-            })
+            var polldb = db.collection('polls')
+            polldb.insertOne(poll)
         }
     })
-}) 
-*/
-/* Vote on Poll */
+})
 
 router.put("/polls/*",  (req,res)=>{
-    
-    //res.send("received put request")
-    // console.log(req)
-    console.log("req body ", req.body)
-
+    //console.log("req body ", req.body)
     let id = req.body.id
     let choice = req.body.choice
     let votes = req.body.votes
-
-    console.log("id ", typeof(id),"choice ", typeof(choice),"votes ", typeof(votes))
-
     MongoClient.connect(mongoUri,function(err,db){
         if(err){
             console.log("Connect error", err)
         }else{
             var polldb = db.collection('polls')
 
-            // console.log(polldb)
-
             polldb.updateOne({id:id, "pollChoices.option":choice},{
                 $set:{
                     "pollChoices.$.votes":votes
-                }
-                
+                }  
             },{w:1}, function(err, result){
                 if(err){
                     console.log("update error", err)
@@ -193,32 +156,6 @@ router.put("/polls/*",  (req,res)=>{
                 res.send("updating votes")
                 db.close();
             })
-        }
-    })
-
-
-})
-
-router.put("/polls/:id/:choice/:value", (req,res)=>{
-    console.log("vote recieved")
-    var id = req.params.id
-    var choice = req.params.choice
-
-    MongoClient.connect(mongoUri,function(err,db){
-        if(err){
-            console.log(err)
-        }else{
-            var polldb = db.collections('polls')
-
-            polldb.update({id:id, pollChoices:{option:choice}},{
-                $set:{
-                    votes:value
-                }
-                
-            })
-                res.send("updating votes")
-            db.close();
-
         }
     })
 })

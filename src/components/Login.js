@@ -25,7 +25,7 @@ class Login extends Component{
 	}
 
 	modalChange=(e)=>{
-		console.log("e", e.target, "text", e.target.text, "value", e.target.value,"name", e.target.name)
+		//console.log("e", e.target, "text", e.target.text, "value", e.target.value,"name", e.target.name)
 		this.setState({
 			role:e.target.id,
 			toggle:!this.state.toggle
@@ -46,8 +46,18 @@ class Login extends Component{
 				<nav className="form-nav">
 					<a className="close" onClick={this.props.closeModal} value="close">X</a>
 					<ul>
-						<li className={this.state.toggle ? "active link" : "link"} onClick={this.modalChange} id="Login">Login</li>
-						<li className={!this.state.toggle ? "active link" : "link"}  onClick={this.modalChange} id="Register">Register</li>
+						<li 
+							className={this.state.toggle ? "active link" : "link"} 
+							onClick={this.modalChange} 
+							id="Login">
+							Login
+						</li>
+						<li 
+							className={!this.state.toggle ? "active link" : "link"}  
+							onClick={this.modalChange} 
+							id="Register">
+							Register
+						</li>
 					</ul>
 				</nav>
 				{(this.state.role !== "reset") &&
@@ -93,7 +103,10 @@ class Login extends Component{
 							<p> Forget your password? Reset Password Now</p>
 						}
 						
-						{this.state.toggle && <a className="link" onClick={this.changeModal} value="Reset">Reset</a>
+						{this.state.toggle && <a 
+							className="link" 
+							onClick={this.changeModal}
+							value="Reset">Reset</a>
 						}
 					</form>
 				}
@@ -112,8 +125,6 @@ class Login extends Component{
 			</div>
 		)
 	}
-
 }
-
 
 export default Login

@@ -71,7 +71,7 @@ class App extends Component{
 	}
 
 	submitHandler=(id, option)=>{
-			// console.log("id = ", id, "option = ", option)
+		
 		const polls = [...this.state.polls];
 			console.log("polls before", polls)
 		
@@ -84,16 +84,10 @@ class App extends Component{
 		pollToChange.pollChoices[choiceIndex].votes ++;
 
 		let votes = pollToChange.pollChoices[choiceIndex].votes	
-		console.log("current Votes", votes)
 
-		// console.log("new votes", votes)
-		console.log("polls after ", polls)	
-			
-		
 		this.setState({polls:polls})
 
 		dataConnect.vote(id, option, votes)
-
 	}
 
 	closeModal = ()=>{
@@ -132,6 +126,8 @@ class App extends Component{
 		polls.push(newPoll)
 			
 		this.setState({polls:polls})
+
+		dataConnect.addPoll(newPoll)
 		
 		this.closeClickHandler();
 	}
@@ -167,7 +163,6 @@ class App extends Component{
 	}
 
 	render(){
-
 		return(
 			<div className="App container">
 				{this.state.activeModal && 
@@ -183,7 +178,6 @@ class App extends Component{
 				{this.currentContent()}
  				
 			</div>
-
 		);
 	}
 }

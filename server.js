@@ -3,7 +3,6 @@ import apiRouter from "./api"
 import sassMiddleware from "node-sass-middleware";
 import path from "path";
 import express from "express";
-
 import serverRender from "./serverRender"
 
 const server= express();
@@ -14,7 +13,6 @@ server.use(sassMiddleware({
 }))
 
 server.set("view engine", "ejs")
-
 server.get([ '/', '/polls/:pollId' ], (req,res)=>{
 
 	serverRender(req.params.pollId, function(content, initialData){
@@ -22,13 +20,7 @@ server.get([ '/', '/polls/:pollId' ], (req,res)=>{
 	})
 })
 
-/*server.put('/polls/*', (req,res)=>{
-	res.send("server.js put request")
-	console.log("Server.js says put request made")
-})*/
-
 server.use('/api', apiRouter)
-
 server.use(express.static('public'));
 
 server.listen(config.port, ()=>{
