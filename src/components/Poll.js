@@ -40,7 +40,7 @@ class Poll extends Component{
 						</select>
 						<br/>
 						<div className="button-container">
-							<input type="submit"  value="Submit"></input>
+							<button type="submit"  value="Submit">Submit</button>
 							<button onClick={this.props.onClose}>Close</button>
 						</div>
 					</form>

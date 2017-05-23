@@ -2,18 +2,18 @@ import express from 'express';
 import data from '../src/test-poll-data';
 import { MongoClient, ObjectID } from 'mongodb';
 import config from "../config"
+import bodyParser from 'body-parser'
 
 const mongoUri = config.mongodbUri
-
 const router = express.Router();
-
+router.use(bodyParser.json())
+router.use(bodyParser.urlencoded({extended:false}))
 // Database endpoints e.g. api/users, api/polls
 /*General lookups*/
 router.get('/polls',(req,res)=>{
-
 	MongoClient.connect(mongoUri, function(err,db){
         console.log("getting polls")
-        console.log("error?", err)
+        
 	if(err){
             console.log("polls error 1 ", err)
         }else{
@@ -23,8 +23,7 @@ router.get('/polls',(req,res)=>{
         		if(err){
         			console.log("polls error 2 ", err)
         		}else{
-                    console.log("polls received")
-        			res.send(docs)
+         			res.send(docs)
         			db.close();
         		}   		
         	})
@@ -33,8 +32,7 @@ router.get('/polls',(req,res)=>{
 })
 
 router.get('/users', (req, res)=>{
-	console.log("getting users")
-	//db connect
+	//console.log("getting users")
 	MongoClient.connect(mongoUri, function(err,db){
 	if(err){
             console.log(err)
@@ -59,9 +57,6 @@ router.get('/users', (req, res)=>{
 /*Individual Polls*/
 router.get('/polls/:pollId', (req,res)=>{
     var pollId =  parseInt(req.params.pollId)
-
-    console.log("pollId", pollId)
-
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
             console.log(err)
@@ -76,18 +71,15 @@ router.get('/polls/:pollId', (req,res)=>{
                     res.send(doc)
                     db.close
                 }
-            })
-               
+            }) 
             db.close()          
         }
     })
 })
 
 /*Individual User lookup; e.g. for profile page*/
-router.get("/user/:userId", (req,res)=>{
-        
+router.get("/user/:userId", (req,res)=>{ 
     var userId = req.params.userId
-
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
                 console.log(err)
@@ -108,10 +100,7 @@ router.get("/user/:userId", (req,res)=>{
 
 /*Polls by User; polls by user lookup*/
 router.get("/polls/user/*", (req,res)=>{
-    console.log("looking up user", req.params[0])
-    
     var userId = req.params[0]
-
     MongoClient.connect(mongoUri, function(err,db){
         if(err){
                 console.log(err)
@@ -129,30 +118,46 @@ router.get("/polls/user/*", (req,res)=>{
         }
     })
 })
-
 /*Data update routes*/
-/*Update userdb: userID= ,key= , value=*/
 
-/*
-router.post("/user/:userId-:key-:value", (req,res)=>{
-    var userId = req.params.userId
-    var key = req.params.key
-    var value = req.params.value
-    
+router.post("/polls", (req,res)=>{
+    //console.log("post body", req.body)
+    let poll = req.body
     MongoClient.connect(mongoUri,function(err,db){
         if(err){
-            console.log(err)
+            console.log("Connect error", err)
         }else{
-            var usersdb = db.collections('users')
-
-            usersdb.update({user:userId},{
-                [key]:value
-            })
-
-            db.close();
+            var polldb = db.collection('polls')
+            polldb.insertOne(poll)
         }
     })
-}) 
-    
-*/
+})
+
+router.put("/polls/*",  (req,res)=>{
+    //console.log("req body ", req.body)
+    let id = req.body.id
+    let choice = req.body.choice
+    let votes = req.body.votes
+    MongoClient.connect(mongoUri,function(err,db){
+        if(err){
+            console.log("Connect error", err)
+        }else{
+            var polldb = db.collection('polls')
+
+            polldb.updateOne({id:id, "pollChoices.option":choice},{
+                $set:{
+                    "pollChoices.$.votes":votes
+                }  
+            },{w:1}, function(err, result){
+                if(err){
+                    console.log("update error", err)
+                }
+                console.log("update happened?", result.result)
+                res.send("updating votes")
+                db.close();
+            })
+        }
+    })
+})
+
 export default router;

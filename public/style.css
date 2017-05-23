@@ -89,16 +89,18 @@ p {
   width: 50%;
   float: right; }
 
-.link, button, nav ul li, .polls-list li {
+.link, button, nav ul li, .polls-list li, input[submit] {
   cursor: pointer; }
 
-.btn {
+button, .btn, input[submit] {
   border-radius: .5rem;
-  line-height: 1.5rem;
   background-color: lightblue;
   padding: .25rem;
   height: 2rem;
-  cursor: pointer; }
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem; }
 
 /* Login Form Styling */
 .modal-overlay {
@@ -121,7 +123,11 @@ p {
     max-width: 40rem;
     height: 2rem;
     color: lightgray;
-    margin-bottom: 1.5rem; }
+    margin-bottom: 1.5rem;
+    line-height: 2rem;
+    padding: .5rem;
+    margin-bottom: 1.5rem;
+    border: .5px dotted gray; }
     .login-container input.btn {
       color: black;
       width: auto; }

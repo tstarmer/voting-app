@@ -30,7 +30,7 @@ class NewPoll extends Component{
 					<input type="text" 
 						className="title" 
 						name="title" 
-						nChange={this.onChange} 
+						onChange={this.onChange} 
 						value={this.state.title}>
 					</input>
 					<h6>Poll Description</h6>

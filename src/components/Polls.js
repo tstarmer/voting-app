@@ -22,7 +22,7 @@ class Polls extends Component{
 		let user = this.props.user
 
 		if(this.props.user){
-			console.log("filter to show user polls")
+			// console.log("filter to show user polls")
 			polls = polls.filter(function(poll){
 				
 				return poll.creatorId === user

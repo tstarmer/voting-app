@@ -14,8 +14,7 @@ const serverRender = (pollId, callback) =>{
 		var rawData ="";
 
 		res.on("data", function(data){
-			rawData += data;
-					
+			rawData += data;		
 		})
 
 		res.on("end", ()=>{
@@ -31,10 +30,7 @@ const serverRender = (pollId, callback) =>{
 
 				var initialData = {data:parsedData , id:pollId||null}
 
-				// console.log("serverRender data = ", initialData)
 				callback(content, initialData)
-			}else{
-				console.log("Houston we have an error", res.statusCode)
 			}
 		})
 	})
