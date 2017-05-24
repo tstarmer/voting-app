@@ -78,7 +78,7 @@ class App extends Component{
 		this.closeModal();
 	}
 
-	submitHandler=(id, option)=>{
+	submitHandler = (id, option) =>{
 		
 		const polls = [...this.state.polls];
 			console.log("polls before", polls)
@@ -138,7 +138,6 @@ class App extends Component{
 		
 		this.closeClickHandler();
 	}
-
 	
 	currentContent(){
 		var currentUser = false;//switch hard coded to dynamic based on logged in

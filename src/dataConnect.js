@@ -7,6 +7,33 @@ const dataConnect = {}
 dataConnect.update = (id, key, value) =>{
 	
 }
+dataConnect.delete = (id, key , value) =>{
+
+}
+
+/*dataConnect.getUser =(user)=>{
+	const userId = user
+	var route = `${config.serverUrl}/api/users/${userId}`
+	http.get(route, (res)=>{
+		var rawData ="";
+		res.on('data', (data)=>{
+			rawData += data;
+		})
+		res.on("end", ()=>{
+			if(res.statusCode===200){
+				console.log("user exist")
+				var parsedData = JSON.parse(rawData)
+
+				return parsedData	
+			}else if(res.statusCode !== 200){
+				console.log("user doesn't exist")
+				return null;
+			}
+		})
+	}
+
+}*/
+
 
 dataConnect.addPoll = (poll) =>{
 	const data = JSON.stringify(poll)
@@ -28,10 +55,6 @@ dataConnect.addPoll = (poll) =>{
 
 	req.write(data)
 	req.end()
-}
-
-dataConnect.delete = (id, key , value) =>{
-
 }
 
 dataConnect.vote = (id, choice, votes) =>{
@@ -61,7 +84,7 @@ dataConnect.vote = (id, choice, votes) =>{
 
 	req.write(data)
 	req.end()
-	
+
 }
 
 export default dataConnect
