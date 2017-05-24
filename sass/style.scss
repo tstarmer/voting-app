@@ -163,7 +163,7 @@ button, .btn, input[submit]{
 	input {
 		width:80%;
 		max-width:40rem;
-		height:2rem;
+		height:2.25rem;
 		color:lightgray;
 		margin-bottom: 1.5rem;
 		line-height:  2rem;
@@ -178,7 +178,8 @@ button, .btn, input[submit]{
 		}
 
 		&:focus{
-			color:black;
+			border: .5px solid black;
+			height: 2.5rem;
 		}
 
 		&[type="submit"]{

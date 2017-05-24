@@ -121,7 +121,7 @@ button, .btn, input[submit] {
   .login-container input {
     width: 80%;
     max-width: 40rem;
-    height: 2rem;
+    height: 2.25rem;
     color: lightgray;
     margin-bottom: 1.5rem;
     line-height: 2rem;
@@ -132,7 +132,8 @@ button, .btn, input[submit] {
       color: black;
       width: auto; }
     .login-container input:focus {
-      color: black; }
+      border: .5px solid black;
+      height: 2.5rem; }
 
 .form-nav {
   margin-bottom: 1.5rem;

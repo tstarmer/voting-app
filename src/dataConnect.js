@@ -7,6 +7,13 @@ const dataConnect = {}
 dataConnect.update = (id, key, value) =>{
 	
 }
+dataConnect.delete = (id, key , value) =>{
+
+}
+dataConnect.checkUser =(user)=>{
+	
+}
+
 
 dataConnect.addPoll = (poll) =>{
 	const data = JSON.stringify(poll)
@@ -28,10 +35,6 @@ dataConnect.addPoll = (poll) =>{
 
 	req.write(data)
 	req.end()
-}
-
-dataConnect.delete = (id, key , value) =>{
-
 }
 
 dataConnect.vote = (id, choice, votes) =>{
@@ -61,7 +64,7 @@ dataConnect.vote = (id, choice, votes) =>{
 
 	req.write(data)
 	req.end()
-	
+
 }
 
 export default dataConnect
