@@ -54,7 +54,7 @@ class App extends Component{
 		})
 	}
 
-	userLoginHandler=(loginStatus)=>{
+	userNavLoginHandler=(loginStatus)=>{
 		
 		if(loginStatus === "logout"){
 			this.setState({
@@ -64,10 +64,18 @@ class App extends Component{
 		}else{
 			this.setState({
 				//change after auth and db integration
-				authUser:"pheobe",
+				// authUser:user,
 				activeModal:loginStatus
 			})
 		}
+	}
+
+	userLoginHandler=(user)=>{
+		this.setState({
+			authUser:user,
+			activeModal:"login"
+		})
+		this.closeModal();
 	}
 
 	submitHandler=(id, option)=>{
@@ -91,7 +99,6 @@ class App extends Component{
 	}
 
 	closeModal = ()=>{
-		// console.log("close the modal")
 		this.setState({
 			activeModal: null
 		})
@@ -166,13 +173,17 @@ class App extends Component{
 		return(
 			<div className="App container">
 				{this.state.activeModal && 
-					<Modals activeModal={this.state.activeModal} 
-					closeModal={this.closeModal}/>}
+					<Modals 
+						activeModal={this.state.activeModal} 
+						closeModal={this.closeModal}
+						loginHandler={this.userLoginHandler}
+					/>
+				}
 				
 				<Nav 
 					user={this.state.authUser} 
 					clickHandler={this.navHandler} 
-					loginHandler={this.userLoginHandler}
+					loginHandler={this.userNavLoginHandler}
 				/>
 				
 				{this.currentContent()}

@@ -16,15 +16,21 @@ class Modals extends Component{
 		}
 	}
 
+	// loginHandler=(username)=>{
+		
+	// 	this.props.loginHandler(username)
+	// }
+
 	render(){
 		console.log("Modal props", this.props)
 		return(
 			<div className="modal-overlay" id="overlay-background" onClick={this.parseClick}>
 
-				{(this.state.currentModal === "login") && 
-					<Login 
+				{(this.state.currentModal === "login") &&  
+					<Login
 						closeModal={this.props.closeModal} 
-						handleLogin={this.props.login}/>
+						handleLogin={this.props.loginHandler}
+					/>
 				}
 
 			</div>

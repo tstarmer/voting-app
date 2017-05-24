@@ -5,7 +5,7 @@ class Login extends Component{
 		super(props);
 		this.state={
 			role: "Login",
-			user: "Username",
+			username: "Username",
 			email: "Email",
 			password: "Password",
 			toggle: true
@@ -15,17 +15,22 @@ class Login extends Component{
 	parseSubmit = (e) =>{
 		e.preventDefault();
 		//validate entry
-			console.log(e.target)
+
+
+			// console.log(`User:${e.target.user.value}, Pass:${e.target.password.value}`)
 		let user ={
-			user:e.target.user,
+			username:e.target.username.value,
 			//encrypt
-			password:e.target.password
+			password:e.target.password.value
 		}
-		// this.props.handleLogin({user})		
+
+
+
+		console.log(user)
+		this.props.handleLogin(user.username)		
 	}
 
 	modalChange=(e)=>{
-		//console.log("e", e.target, "text", e.target.text, "value", e.target.value,"name", e.target.name)
 		this.setState({
 			role:e.target.id,
 			toggle:!this.state.toggle
@@ -64,9 +69,9 @@ class Login extends Component{
 					<form onSubmit={this.parseSubmit}>
 						<input 
 							type="text" 
-							name="user" 
+							name="username" 
 							onChange={this.onChange}
-							value={this.state.user}>
+							value={this.state.username}>
 						</input>
 						<br/>
 						{!this.state.toggle && 
