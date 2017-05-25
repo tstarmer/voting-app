@@ -32,6 +32,7 @@ class Modals extends Component{
 			//hash the password
 		}else{
 			// prompt user to fix invalid
+
 		}	
 	}
 	
@@ -57,7 +58,31 @@ class Modals extends Component{
 		if(role === "Register"){
 
 		}
-		
+
+	}
+	
+
+	authenticateUser = (user) =>{
+		// check if user exists
+
+		//check if the password matches
+			//hash the pasword and see if hashes match
+	
+	}
+
+
+
+	loginHandler=(user, role, callback)=>{
+		let errors = {
+			username:null,
+			email:null,
+			password:null
+		}
+
+		if(role === "Register"){
+
+		}
+
 		callback(errors);
 		this.props.loginHandler(username)
 	}

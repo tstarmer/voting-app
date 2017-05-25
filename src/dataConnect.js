@@ -10,6 +10,7 @@ dataConnect.update = (id, key, value) =>{
 dataConnect.delete = (id, key , value) =>{
 
 }
+<<<<<<< HEAD
 
 /*dataConnect.getUser =(user)=>{
 	const userId = user
@@ -33,6 +34,11 @@ dataConnect.delete = (id, key , value) =>{
 	}
 
 }*/
+=======
+dataConnect.checkUser =(user)=>{
+	
+}
+>>>>>>> 5afe6f8be642e37db1e4cc94636cd02af3a8dd5f
 
 
 dataConnect.addPoll = (poll) =>{

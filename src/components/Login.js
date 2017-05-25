@@ -45,6 +45,7 @@ class Login extends Component{
 
 		if(password.length < 8){
 			console.log("Whoa Buddy, you sure you want to do that?")
+
 		}
 	}
 
@@ -72,6 +73,31 @@ class Login extends Component{
 
 	clearInitial = (e)=>{
 
+	}
+
+	validateEntry = (e) =>{
+		const entry = e.target.value
+		let style = e.target.style
+		const valid = this.validStyle
+		const invalid = this.invalidStyle
+
+		switch(e.target.name){
+			case "username":
+				entry.length < 4 ? style.color = invalid.color  : style.color = valid.color
+				break;
+			case "password":
+				entry.length < 8 ? style.color = invalid.color: style.color = valid.color
+				break;
+			case "confirmPassword":
+				entry !== this.state.password ? style.color = invalid.color: style.color = valid.color
+				break;
+			case "email":
+				!this.validateEmail(entry) ? style.color = invalidStyle.color : style.color = validStyle.color
+				break;
+		}
+	}
+
+	checkExisting = (username)=>{
 
 		console.log("Should it be cleared?")
 		console.log(e.target.value,initialState[e.target.name], e.target.value === initialState[e.target.name])
@@ -81,10 +107,6 @@ class Login extends Component{
 			})	
 			console.log("cleared")
 		}	
-	}
-
-	checkExisting = (username)=>{
-
 	}
 
 	parseSubmit = (e) =>{
