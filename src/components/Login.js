@@ -5,9 +5,9 @@ const initialState = {
 			password: "Password",
 			confirmPassword: "Confirm Password",
 			email: "Email",
+			validCount: 0,
 			toggle: true
 }
-
 
 class Login extends Component{
 	constructor(props){
@@ -18,10 +18,10 @@ class Login extends Component{
 			password: "Password",
 			confirmPassword: "Confirm Password",
 			email: "Email",
+			validCount: 0,
 			toggle: true
 		}
 	}
-
 	//need to scrub/reset the state after log in 
 
 	validStyle = {
@@ -30,6 +30,32 @@ class Login extends Component{
 
 	invalidStyle ={
 		color:"red"
+	}
+
+	componentDidMount(){
+		this.validTimer = setInterval(()=>this.validEntries(), 1000)
+	}
+
+	componentWillUnmount(){
+		clearInterval(this.validTimer)
+	}
+
+	validEntries = () =>{
+		var count = 0
+
+		if(this.state !== initialState){
+			//valid username
+			this.state.username.length >= 4 && count++
+			//valid Password
+			this.validatePassword(this.state.password) && count++
+			//valid Confirm
+			this.state.password === this.state.confirmPassword && count++
+			//check email
+			this.validateEmail(this.state.email) && count++
+		}
+		this.setState({
+			validCount: count
+		})
 	}
 
 	validateEmail = (email)=>{
@@ -42,11 +68,7 @@ class Login extends Component{
 		//valid password is ?
 			//no spaces
 			//contains at least?
-
-		if(password.length < 8){
-			console.log("Whoa Buddy, you sure you want to do that?")
-
-		}
+		return (password.length >= 8)
 	}
 
 	validateEntry = (e) =>{
@@ -60,71 +82,23 @@ class Login extends Component{
 				entry.length < 4 ? style.color = invalid.color  : style.color = valid.color
 				break;
 			case "password":
-				entry.length < 8 ? style.color = invalid.color: style.color = valid.color
+				entry.length < 8 ? style.color = invalid.color : style.color = valid.color
 				break;
 			case "confirmPassword":
-				entry !== this.state.password ? style.color = invalid.color: style.color = valid.color
+				entry !== this.state.password ? style.color = invalid.color : style.color = valid.color
 				break;
 			case "email":
-				!this.validateEmail(entry) ? style.color = invalidStyle.color : style.color = validStyle.color
+				!this.validateEmail(entry) ? style.color = invalid.color : style.color = valid.color
 				break;
 		}
 	}
 
 	clearInitial = (e)=>{
-
-	}
-
-	validateEntry = (e) =>{
-		const entry = e.target.value
-		let style = e.target.style
-		const valid = this.validStyle
-		const invalid = this.invalidStyle
-
-		switch(e.target.name){
-			case "username":
-				entry.length < 4 ? style.color = invalid.color  : style.color = valid.color
-				break;
-			case "password":
-				entry.length < 8 ? style.color = invalid.color: style.color = valid.color
-				break;
-			case "confirmPassword":
-				entry !== this.state.password ? style.color = invalid.color: style.color = valid.color
-				break;
-			case "email":
-				!this.validateEmail(entry) ? style.color = invalidStyle.color : style.color = validStyle.color
-				break;
-		}
-	}
-
-	checkExisting = (username)=>{
-
-		console.log("Should it be cleared?")
-		console.log(e.target.value,initialState[e.target.name], e.target.value === initialState[e.target.name])
 		if(e.target.value === initialState[e.target.name]){
 			this.setState({
 				[e.target.name]:""
 			})	
-			console.log("cleared")
-		}	
-	}
-
-	parseSubmit = (e) =>{
-		e.preventDefault();
-		
-		let role = this.state.role
-		let user ={
-			username:e.target.username.value,
-			email:e.target.email.value,
-			password:e.target.password.value
 		}
-		
-		this.state.role === "Register" ? registerUser(user) : authenticateUser(user)
-		//scrub entries from state
-		this.props.handleLogin(user, role, (errors)=>{
-			console.log(errors)
-		})
-		this.setState(initialState)	
 	}
 
 	menuChange=(e)=>{
@@ -140,8 +114,30 @@ class Login extends Component{
 		})
 	}
 
-	render(){
+	parseSubmit = (e) =>{
+		e.preventDefault();
+		//console.log("Submitting")
+		let role = this.state.role
+		
+		let user ={
+			username:e.target.username.value,
+			password:e.target.password.value
+		}
 
+		if(role === "Register"){
+			user.email = e.target.email.value
+		}
+
+		//scrub entries from state
+		console.log("user submitted", user)
+
+		this.props.handleLogin(user, role, (errors)=>{
+			console.log(errors)
+		})
+		this.setState(initialState)	
+	}
+
+	render(){
 		return(
 			<div className="login-container">
 				{/* add register and login side by side */}
@@ -203,6 +199,7 @@ class Login extends Component{
 								type="text" 
 								name="email" 
 								onChange={this.onChange}
+								onFocus={this.clearInitial}
 								onInput={this.validateEntry}
 								value={this.state.email}>
 							</input>
@@ -213,6 +210,11 @@ class Login extends Component{
 								type="submit" 
 								className="btn submit" 
 								value={this.state.role}
+								disabled={!(
+									this.state.toggle ?
+									this.state.validCount === 2
+									 : this.state.validCount === 4)
+									}
 							>
 							Submit
 							</button>

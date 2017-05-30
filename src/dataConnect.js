@@ -10,35 +10,59 @@ dataConnect.update = (id, key, value) =>{
 dataConnect.delete = (id, key , value) =>{
 
 }
-<<<<<<< HEAD
 
-/*dataConnect.getUser =(user)=>{
+dataConnect.getUser =(user, callback)=>{
 	const userId = user
-	var route = `${config.serverUrl}/api/users/${userId}`
+	const route = `${config.serverUrl}/api/user/${userId}`
 	http.get(route, (res)=>{
-		var rawData ="";
+		let rawData ="";
 		res.on('data', (data)=>{
 			rawData += data;
 		})
 		res.on("end", ()=>{
-			if(res.statusCode===200){
-				console.log("user exist")
-				var parsedData = JSON.parse(rawData)
+			console.log("get user response", res)
+			console.log("data", rawData, "datalength", rawData.length)
+			
 
-				return parsedData	
+			if(res.statusCode===200 && rawData.length !== 0){
+				console.log("user exists")
+				let parsedData = JSON.parse(rawData)
+				
+				return callback(parsedData)	
+			}else if(rawData.length===0){
+				console.log("EMpty data = no user")
+				return callback(null)
 			}else if(res.statusCode !== 200){
-				console.log("user doesn't exist")
-				return null;
+				console.log("user doesn't exist res =", res.statusCode)
+				return callback(null);
 			}
 		})
+	})
+
+}
+
+dataConnect.adduser = (user) =>{
+	const data = JSON.stringify(user)
+	const headers={
+		'Content-Type': 'application/json',
+		'Content-Length': data.length
+	}
+	const options = {
+		hostname:config.host,
+		port:config.port,
+		path:`/api/users`,
+		method: 'POST',
+		headers: headers
 	}
 
-}*/
-=======
-dataConnect.checkUser =(user)=>{
-	
+	const req = http.request(options, (res)=>{
+		console.log("user post response", res)
+	})
+
+	req.write(data)
+	req.end()
+
 }
->>>>>>> 5afe6f8be642e37db1e4cc94636cd02af3a8dd5f
 
 
 dataConnect.addPoll = (poll) =>{

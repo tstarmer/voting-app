@@ -69,7 +69,7 @@ router.get('/polls/:pollId', (req,res)=>{
                 }else{
                     console.log("doc", doc)
                     res.send(doc)
-                    db.close
+                    
                 }
             }) 
             db.close()          
@@ -86,14 +86,16 @@ router.get("/user/:userId", (req,res)=>{
         }else{
             var usersdb = db.collection('users')
 
-            usersdb.findOne({id:userId}).toArray(function(err, docs){
+            usersdb.findOne({user:userId}, function(err, doc){
                 if(err){
                     console.log(err)
                 }else{
-                    res.send(docs)
-                    db.close();
+                    console.log("user", doc)
+                    res.send(doc)
+                    
                 } 
             })
+            db.close()
         }
     })
 })
@@ -159,5 +161,27 @@ router.put("/polls/*",  (req,res)=>{
         }
     })
 })
+
+router.put("/users/*",  (req,res)=>{
+    console.log("req body ", req.body)
+   
+    MongoClient.connect(mongoUri,function(err,db){
+        if(err){
+            console.log("Connect error", err)
+        }else{
+            var polldb = db.collection('users')
+
+            /*polldb.insertOne( function(err, result){
+                if(err){
+                    console.log("update error", err)
+                }
+                console.log("update happened?", result.result)
+                res.send("updating votes")
+                db.close();
+            })*/
+        }
+    })
+})
+
 
 export default router;

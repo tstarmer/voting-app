@@ -36,8 +36,7 @@ class App extends Component{
 	}
 
 	navHandler=(menuItem)=>{
-		
-		var currentuser = this.state.authUser
+		let currentuser = this.state.authUser
 		//temporary value for testing purposes
 		if(menuItem === "my-polls"){
 			currentuser = "mortise"
@@ -79,13 +78,10 @@ class App extends Component{
 	}
 
 	submitHandler = (id, option) =>{
-		
 		const polls = [...this.state.polls];
-			console.log("polls before", polls)
-		
-		var pollToChange = polls[id]
-			
-		var choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
+			// console.log("polls before", polls)
+		let pollToChange = polls[id]	
+		let choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
 			return element.option === option
 		})
 		
@@ -109,11 +105,8 @@ class App extends Component{
 	}
 
 	addNewPoll=(poll)=>{
-		
 		const polls = [...this.state.polls]
-			
 		var newPollChoices = poll.choices.split(",")
-
 		var newOptions = newPollChoices.map(function(item){
 			return {
 				"option":item,
