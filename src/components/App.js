@@ -10,7 +10,6 @@ import dataConnect from "../dataConnect.js"
 */
 
 const pushState = (object, url)=>{
-	// console.log("pushing history", object)
 	window.history.pushState(object,'',url);
 }
 
@@ -21,6 +20,7 @@ class App extends Component{
 			authUser: false,
 			currentPoll: this.props.currentPoll,
 			activeModal: null,
+			pollsVoted:[],
 			polls:this.props.initialData
 		}
 	}
@@ -36,50 +36,45 @@ class App extends Component{
 	}
 
 	navHandler=(menuItem)=>{
-		let currentuser = this.state.authUser
-		//temporary value for testing purposes
-		if(menuItem === "my-polls"){
-			currentuser = "mortise"
-		}
 		if(menuItem === "home"){
 			menuItem = ""
 		}
+		
 		pushState({currentPoll:menuItem || null}, `/${menuItem}`)
 			
 		this.setState({
-			authUser: currentuser,
 			currentPoll:menuItem || null,
 			activeModal:null
 		})
 	}
 
 	userNavLoginHandler=(loginStatus)=>{
-		
-		if(loginStatus === "logout"){
+		loginStatus === "logout" ? 
 			this.setState({
 				authUser:false,
 				activeModal:null
-			})			
-		}else{
+			}) : 
 			this.setState({
-				//change after auth and db integration
-				// authUser:user,
 				activeModal:loginStatus
 			})
-		}
 	}
 
-	userLoginHandler=(user)=>{
+	userLoginHandler=(user, votes)=>{
 		this.setState({
 			authUser:user,
+			pollsVoted: votes,
 			activeModal:null
 		})
 		this.closeModal();
 	}
 
-	submitHandler = (id, option) =>{
+	voteSubmitHandler = (id, option) =>{
 		const polls = [...this.state.polls];
+		const pollsVoted = [...this.state.pollsVoted]
 			// console.log("polls before", polls)
+		
+
+		let user = this.state.authUser
 		let pollToChange = polls[id]	
 		let choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
 			return element.option === option
@@ -89,9 +84,15 @@ class App extends Component{
 
 		let votes = pollToChange.pollChoices[choiceIndex].votes	
 
-		this.setState({polls:polls})
+		pollsVoted.push(id)
+
+		this.setState({
+			polls:polls,
+			pollsVoted:pollsVoted
+		})
 
 		dataConnect.vote(id, option, votes)
+		dataConnect.updateUser(user, "pollsVoted", pollsVoted)
 	}
 
 	closeModal = ()=>{
@@ -117,7 +118,7 @@ class App extends Component{
 		var newPoll = {
 			id: polls.length,
 			title: poll.title,
-			creatorId: "mortise",
+			creatorId: this.state.authUser,
 			description: poll.description,
 			pollChoices: newOptions 
 
@@ -128,6 +129,7 @@ class App extends Component{
 		this.setState({polls:polls})
 
 		dataConnect.addPoll(newPoll)
+		//dataConnect.updateUser(this.state.authUser, "pollsCreated", id)
 		
 		this.closeClickHandler();
 	}
@@ -135,8 +137,7 @@ class App extends Component{
 	currentContent(){
 		var currentUser = false;//switch hard coded to dynamic based on logged in
 		if(this.state.currentPoll === "my-polls"){
-			// currentUser = this.state.authUser
-			currentUser ="mortise"
+			currentUser = this.state.authUser
 		}
 
 		if((this.state.currentPoll && this.state.currentPoll !=="my-polls") || this.state.currentPoll == 0){
@@ -151,7 +152,9 @@ class App extends Component{
 			return <Poll 
 						poll={this.state.polls[this.state.currentPoll]} 
 						onClose={this.closeClickHandler} 
-						onSubmit={this.submitHandler}
+						onSubmit={this.voteSubmitHandler}
+						voted={this.state.pollsVoted.includes(this.state.currentPoll)}
+
 					/>
 		}
 		return <Polls 

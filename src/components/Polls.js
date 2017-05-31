@@ -5,7 +5,6 @@ const ListItem =(props)=>{
 	return <li className="polls-list-item" id={props.id} onClick={props.handleClick} >{props.title}</li>
 }
 
-
 class Polls extends Component{
 	constructor(props){
 		super(props);
@@ -17,18 +16,15 @@ class Polls extends Component{
 	}
 
 	render(){
-		// console.log("polls", this.props)
 		let polls = this.props.polls
 		let user = this.props.user
 
 		if(this.props.user){
 			// console.log("filter to show user polls")
 			polls = polls.filter(function(poll){
-				
 				return poll.creatorId === user
 			})
 		} 
-
 
 		return(
 			<div className="polls-container">
@@ -42,7 +38,7 @@ class Polls extends Component{
 				})}
 				</ul>
 			</div>
-			)
+		)
 	}
 }
 

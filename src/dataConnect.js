@@ -104,6 +104,33 @@ dataConnect.vote = (id, choice, votes) =>{
 
 	req.write(data)
 	req.end()
+
+}
+
+dataConnect.updateUser = (user, key, value)=>{
+	const data = JSON.stringify({
+		user: user,
+		key:key,
+		value:value
+	})
+	const headers={
+		'Content-Type': 'application/json',
+		'Content-Length': data.length
+	}
+	const options = {
+		hostname:config.host,
+		port:config.port,
+		path:`/api/users/`,
+		method: 'PUT',
+		headers: headers
+	}
+	const req = http.request(options, (res)=>{
+		console.log("put request made")
+		console.log("response", res)
+	})
+
+	req.write(data)
+	req.end()
 }
 
 export default dataConnect

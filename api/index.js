@@ -173,4 +173,28 @@ router.post("/users",  (req,res)=>{
     })
 })
 
+router.put("/users", (req,res)=>{
+    let user = req.body.user
+    let key = req.body.key
+    let value = req.body.value
+    MongoClient.connect(mongoUri,function(err,db){
+        if(err){
+            console.log("Connect error", err)
+        }else{
+            var userdb = db.collection('users')
+
+            userdb.updateOne({user:user},
+                {$set:{[key]:value}}, 
+                function(err, result){
+                    if(err){
+                        console.log("update error", err)
+                    }
+                    console.log("update happened?", result.result)
+                    res.send(`updated user:${user} to ${key}:${value}`)
+            })
+        }
+        db.close();
+    })
+})
+
 export default router;

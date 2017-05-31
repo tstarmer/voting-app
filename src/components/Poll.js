@@ -8,11 +8,8 @@ class Poll extends Component{
 
 	handleSubmit = (e) =>{
 		e.preventDefault();
-			// console.log("this id", this.props.poll.id)
-		// console.log("targ=", e.target[0],"value=", e.target[0].value)
-		var id = this.props.poll.id
-			// console.log("poll id", id)
-		var choice = e.target[0].value
+		let id = this.props.poll.id,
+			choice = e.target[0].value
 	
 		return this.props.onSubmit(id, choice) 
 	}
@@ -40,8 +37,9 @@ class Poll extends Component{
 						</select>
 						<br/>
 						<div className="button-container">
-							<button type="submit"  value="Submit">Submit</button>
+							<button type="submit" disabled={this.props.voted} value="Submit">Submit</button>
 							<button onClick={this.props.onClose}>Close</button>
+							{this.props.voted && <p>You have already voted on this poll</p>}
 						</div>
 					</form>
 				</div>

@@ -75,7 +75,7 @@ class Modals extends Component{
 	
 	authenticateUser = (user) =>{
 		const {username, password, email} = user
-		let existingUser, existingPass;
+		let existingUser, existingPass, existingVotes;
 
 		dataConnect.getUser(username, (response)=>{
 			
@@ -84,9 +84,13 @@ class Modals extends Component{
 				this.modalSwitch("message", noMatch)
 				return false
 			}else{
+				console.log(response.pollsVoted)
 				existingUser = response.user
-				existingPass = response.pass
-				//compare passwords hashed
+				existingPass = response.pass;
+				response.pollsVoted ? 
+					existingVotes = response.pollsVoted : 
+					existingVotes=[];
+							//compare passwords hashed
 				bcrypt.compare(password, existingPass, (err, res)=>{
 					if(err){
 						console.log(err)
@@ -97,7 +101,7 @@ class Modals extends Component{
 						if(!res){
 							this.modalSwitch("messagebox", noMatch)
 						}else{
-							this.props.loginHandler(username)
+							this.props.loginHandler(username, existingVotes)
 						}
 						return res
 					}	
