@@ -14,8 +14,8 @@ router.get('/polls',(req,res)=>{
 	MongoClient.connect(mongoUri, function(err,db){
         console.log("getting polls")
         
-	if(err){
-            console.log("polls error 1 ", err)
+    	if(err){
+                console.log("polls error 1 ", err)
         }else{
         	var pollsdb = db.collection('polls')
 
@@ -24,18 +24,18 @@ router.get('/polls',(req,res)=>{
         			console.log("polls error 2 ", err)
         		}else{
          			res.send(docs)
-        			db.close();
-        		}   		
+           		}   		
         	})
         }
+        db.close();
     })
 })
 
 router.get('/users', (req, res)=>{
 	//console.log("getting users")
 	MongoClient.connect(mongoUri, function(err,db){
-	if(err){
-            console.log(err)
+    	if(err){
+                console.log(err)
         }else{
         	var usersdb = db.collection('users')
 
@@ -44,15 +44,12 @@ router.get('/users', (req, res)=>{
         			console.log(err)
         		}else{
         			res.send(docs)
-        			db.close();
-        		}     		
+        		}   		
         	})
         }
+        db.close();
 	})
 })
-
-/*Database query end points */
-/*Specific End points*/
 
 /*Individual Polls*/
 router.get('/polls/:pollId', (req,res)=>{
@@ -69,11 +66,10 @@ router.get('/polls/:pollId', (req,res)=>{
                 }else{
                     console.log("doc", doc)
                     res.send(doc)
-                    
                 }
-            }) 
-            db.close()          
+            })              
         }
+        db.close()
     })
 })
 
@@ -92,11 +88,10 @@ router.get("/user/:userId", (req,res)=>{
                 }else{
                     console.log("user", doc)
                     res.send(doc)
-                    
                 } 
             })
-            db.close()
         }
+        db.close()
     })
 })
 
@@ -114,14 +109,14 @@ router.get("/polls/user/*", (req,res)=>{
                     console.log(err)
                 }else{
                     res.send(docs)
-                    db.close();
                 }  
             })
         }
+        db.close();
     })
 })
-/*Data update routes*/
 
+/*Data update routes*/
 router.post("/polls", (req,res)=>{
     //console.log("post body", req.body)
     let poll = req.body
@@ -131,8 +126,8 @@ router.post("/polls", (req,res)=>{
         }else{
             var polldb = db.collection('polls')
             polldb.insertOne(poll)
-            db.close()
         }
+        db.close();
     })
 })
 
@@ -157,9 +152,9 @@ router.put("/polls/*",  (req,res)=>{
                 }
                 console.log("update happened?", result.result)
                 res.send("updating votes")
-                db.close();
             })
         }
+        db.close();
     })
 })
 
@@ -173,10 +168,9 @@ router.post("/users",  (req,res)=>{
             var polldb = db.collection('users')
 
             polldb.insertOne(user)
-            db.close();
         }
+        db.close();
     })
 })
-
 
 export default router;

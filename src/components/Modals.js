@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import config from '../../config'
 import dataConnect from '../dataConnect'
 import Login from './Login'
-// import bcrypt from 'bcrypt'
-
+import MessageBox from './MessageBox'
 import bcrypt from 'bcryptjs'
+
+/*Default Messages*/
+const wrongMessage = "Something went wrong. Please try again."
+const noMatch = "Username and/or password do not match an existing user and password combination"
+const userExists = "Username or email already in use please choose another"
 
 class Modals extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			currentModal:this.props.activeModal
+			currentModal:this.props.activeModal,
+			message: "Hello!",
+			errors:{
+				username:null,
+				email:null,
+				password:null
+			}
 		}
 	}
 
@@ -19,117 +29,100 @@ class Modals extends Component{
 			this.props.closeModal();
 		}
 	}
-
-	checkUser = (username)=>{
-		console.log("checking User")
-		return dataConnect.getUser(username)
-	}
-	
+		
 	hashItem = (itemToHash, saltRounds, callback)=>{
-		console.log("hashing: ", itemToHash , " with ", saltRounds, " salts")
-
+		// console.log("hashing: ", itemToHash , " with ", saltRounds, " salts")
 		return bcrypt.hash(itemToHash, saltRounds, (err,hash)=>{
 			if(err){
 				console.log("Hash error: ", err)
 				return err
 			}else{
-				// console.log(hash)
 				callback(hash)
 			}
 		})
 	}
 
-	addUser = (user) =>{
-		console.log("adding to userdb user:", user)
-		dataConnect.addUser(user)
-	}
-
 	registerUser = (user) =>{
 		console.log("registering user")
 		const {username, password, email} = user
-		// let hashedPassword=""
-		// let hashedEmail=""
 		let newUser ={
 			user: username,
+			pass:"",
+			email:"",
 			authorized:true,
 			pollsVoted:[],
 			pollsCreated:[]
 		}
 
 		dataConnect.getUser(username,(response)=>{
-			console.log("Data connect response", response)
+			// console.log("Data connect response", response)
 			if(response === null){
 				//user doesn't exist
-				console.log("new user")
 				this.hashItem(password, 10, (res)=>{
-					// hashedPassword = res
 					newUser.pass = res
 
 					this.hashItem(email, 10,(res)=>{
-						// hashedEmail = res
 						newUser.email = res
-						console.log("New User is", newUser)
-						this.addUser(newUser)
+						dataConnect.addUser(newUser)//add to db
 					})
 				})
 			}else{
-				console.log("user exists")
-
+				// console.log("user exists")
+				this.modalSwitch("messagebox", userExists)
 			}
 		})					
 	}
 	
 	authenticateUser = (user) =>{
-		// check if user exists
 		const {username, password, email} = user
+		let existingUser, existingPass;
 
-		const existingUser = checkUser(username)
-			console.log("existing", existingUser)
-		const existingPass = existingUser.pass
+		dataConnect.getUser(username, (response)=>{
 			
-		//check if the password matches
-			//hash the pasword and see if hashes match
-		if(!existingUser){
-			console.log("No user")
-
-			return "Something went wrong"
-		}else{
-			//compare passwords hashed
-
-			bcrypt.compare(password, existingPass, function(err, res){
-				if(err){
-					console.log(err)
-				}else{
-					console.log("compare result", res)
-				}
-				
-			})
-			//
-			//return existingPass === this.hashItem(password, 10) ? "Success" : "Fail"
-
-		}
-
-	
+			if(response === null){
+				console.log("No user")
+				this.modalSwitch("message", noMatch)
+				return false
+			}else{
+				existingUser = response.user
+				existingPass = response.pass
+				//compare passwords hashed
+				bcrypt.compare(password, existingPass, (err, res)=>{
+					if(err){
+						console.log(err)
+						this.modalSwitch("messagebox", wrongMessage)
+						return false
+					}else{
+						console.log("compare result", res)
+						if(!res){
+							this.modalSwitch("messagebox", noMatch)
+						}else{
+							this.props.loginHandler(username)
+						}
+						return res
+					}	
+				})
+			}
+		})
 	}
 
-	loginHandler=(user, role, callback)=>{
-		let errors = {
-			username:null,
-			email:null,
-			password:null
+	loginHandler=(user, role)=>{
+		if(role === "Register"){
+			this.registerUser(user)
+		}else {
+			console.log("Authenticate")
+			this.authenticateUser(user)
 		}
-
-		const {username} = user
-
-			console.log(`Login initiate for user:`, user , `role:${role}` )
-
-		role === "Register" ? this.registerUser(user) : this.authenticateUser(user)
-				
-		this.props.loginHandler(username)
-
-		callback(errors);
+		this.props.closeModal()
 	}
 	
+	modalSwitch =(newModal, message)=>{
+		this.setState({
+			currentModal: newModal,
+			message: message
+		})
+	}
+
 	render(){
 		return(
 			<div 
@@ -137,17 +130,21 @@ class Modals extends Component{
 				id="overlay-background" 
 				onClick={this.parseClick}
 			>
-
 				{(this.state.currentModal === "login") &&  
 					<Login
 						closeModal={this.props.closeModal} 
 						handleLogin={this.loginHandler}
+						errors={this.state.errors}
 					/>
 				}
-
+				{(this.state.currentModal === "messagebox") &&
+					<MessageBox 
+						closeModal={this.props.closeModal}
+						message={this.state.message}
+					/>
+				}
 			</div>
 		)
 	}
 }
-
 export default Modals

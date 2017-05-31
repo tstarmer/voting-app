@@ -110,6 +110,19 @@ button, .btn, input[submit] {
   height: 100vh;
   z-index: 10; }
 
+.message-box {
+  text-align: center;
+  background-color: whitesmoke;
+  width: 40%;
+  height: 40vh;
+  margin: auto;
+  margin-top: 15%;
+  z-index: 20; }
+  .message-box .close {
+    float: right;
+    color: red;
+    width: 15%; }
+
 .login-container {
   text-align: center;
   background-color: whitesmoke;

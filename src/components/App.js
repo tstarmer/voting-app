@@ -18,7 +18,7 @@ class App extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			authUser: true,
+			authUser: false,
 			currentPoll: this.props.currentPoll,
 			activeModal: null,
 			polls:this.props.initialData
@@ -72,7 +72,7 @@ class App extends Component{
 	userLoginHandler=(user)=>{
 		this.setState({
 			authUser:user,
-			activeModal:"login"
+			activeModal:null
 		})
 		this.closeModal();
 	}

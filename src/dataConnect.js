@@ -27,7 +27,7 @@ dataConnect.getUser =(user, callback)=>{
 				
 				return callback(parsedData)	
 			}else if(rawData.length===0){
-					console.log("EMpty data = no user")
+					console.log("Empty data = no user")
 				return callback(null)
 			}else if(res.statusCode !== 200){
 					console.log("user doesn't exist res =", res.statusCode)

@@ -150,6 +150,21 @@ button, .btn, input[submit]{
 	z-index:10;
 }
 
+.message-box{
+	text-align:center;
+	background-color: whitesmoke;
+	width:40%;
+	height:40vh;
+	margin:auto;
+	margin-top: 15%;
+	z-index:20;
+
+	.close{
+		float:right;
+		color:red;
+		width:15%;
+	}
+}
 
 .login-container{
 	text-align:center;
