@@ -12,15 +12,7 @@ const initialState = {
 class Login extends Component{
 	constructor(props){
 		super(props);
-		this.state={
-			role: "Login",
-			username: "Username",
-			password: "Password",
-			confirmPassword: "Confirm Password",
-			email: "Email",
-			validCount: 0,
-			toggle: true
-		}
+		this.state={...initialState}
 	}
 	//need to scrub/reset the state after log in 
 
@@ -85,6 +77,7 @@ class Login extends Component{
 				entry.length < 8 ? style.color = invalid.color : style.color = valid.color
 				break;
 			case "confirmPassword":
+				//validate when password is changed after?
 				entry !== this.state.password ? style.color = invalid.color : style.color = valid.color
 				break;
 			case "email":
@@ -112,6 +105,7 @@ class Login extends Component{
 		this.setState({
 			[e.target.name]:e.target.value
 		})
+
 	}
 
 	parseSubmit = (e) =>{

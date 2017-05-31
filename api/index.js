@@ -131,6 +131,7 @@ router.post("/polls", (req,res)=>{
         }else{
             var polldb = db.collection('polls')
             polldb.insertOne(poll)
+            db.close()
         }
     })
 })
@@ -162,23 +163,17 @@ router.put("/polls/*",  (req,res)=>{
     })
 })
 
-router.put("/users/*",  (req,res)=>{
+router.post("/users",  (req,res)=>{
     console.log("req body ", req.body)
-   
+    let user = req.body 
     MongoClient.connect(mongoUri,function(err,db){
         if(err){
             console.log("Connect error", err)
         }else{
             var polldb = db.collection('users')
 
-            /*polldb.insertOne( function(err, result){
-                if(err){
-                    console.log("update error", err)
-                }
-                console.log("update happened?", result.result)
-                res.send("updating votes")
-                db.close();
-            })*/
+            polldb.insertOne(user)
+            db.close();
         }
     })
 })

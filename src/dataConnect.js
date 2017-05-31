@@ -1,6 +1,6 @@
 import config from "../config";
 import http from 'http'
-import querystring from 'querystring'
+// import querystring from 'querystring'
 
 const dataConnect = {} 
 
@@ -19,29 +19,25 @@ dataConnect.getUser =(user, callback)=>{
 		res.on('data', (data)=>{
 			rawData += data;
 		})
-		res.on("end", ()=>{
-			console.log("get user response", res)
-			console.log("data", rawData, "datalength", rawData.length)
-			
+		res.on("end", ()=>{	
 
 			if(res.statusCode===200 && rawData.length !== 0){
-				console.log("user exists")
+					console.log("user exists")
 				let parsedData = JSON.parse(rawData)
 				
 				return callback(parsedData)	
 			}else if(rawData.length===0){
-				console.log("EMpty data = no user")
+					console.log("EMpty data = no user")
 				return callback(null)
 			}else if(res.statusCode !== 200){
-				console.log("user doesn't exist res =", res.statusCode)
+					console.log("user doesn't exist res =", res.statusCode)
 				return callback(null);
 			}
 		})
 	})
-
 }
 
-dataConnect.adduser = (user) =>{
+dataConnect.addUser = (user) =>{
 	const data = JSON.stringify(user)
 	const headers={
 		'Content-Type': 'application/json',
@@ -54,14 +50,12 @@ dataConnect.adduser = (user) =>{
 		method: 'POST',
 		headers: headers
 	}
-
 	const req = http.request(options, (res)=>{
 		console.log("user post response", res)
 	})
 
 	req.write(data)
 	req.end()
-
 }
 
 
@@ -78,7 +72,6 @@ dataConnect.addPoll = (poll) =>{
 		method: 'POST',
 		headers: headers
 	}
-
 	const req = http.request(options, (res)=>{
 		console.log("put response", res)
 	})
@@ -93,12 +86,10 @@ dataConnect.vote = (id, choice, votes) =>{
 		choice: choice,
 		votes:votes
 	})
-
 	const headers={
 		'Content-Type': 'application/json',
 		'Content-Length': data.length
 	}
-
 	const options = {
 		hostname:config.host,
 		port:config.port,
@@ -106,7 +97,6 @@ dataConnect.vote = (id, choice, votes) =>{
 		method: 'PUT',
 		headers: headers
 	}
-
 	const req = http.request(options, (res)=>{
 		console.log("put request made")
 		console.log("response", res)
@@ -114,7 +104,6 @@ dataConnect.vote = (id, choice, votes) =>{
 
 	req.write(data)
 	req.end()
-
 }
 
 export default dataConnect

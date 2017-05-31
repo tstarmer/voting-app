@@ -50,7 +50,7 @@ class Modals extends Component{
 		// let hashedPassword=""
 		// let hashedEmail=""
 		let newUser ={
-			username: username,
+			user: username,
 			authorized:true,
 			pollsVoted:[],
 			pollsCreated:[]
@@ -63,7 +63,7 @@ class Modals extends Component{
 				console.log("new user")
 				this.hashItem(password, 10, (res)=>{
 					// hashedPassword = res
-					newUser.password = res
+					newUser.pass = res
 
 					this.hashItem(email, 10,(res)=>{
 						// hashedEmail = res
