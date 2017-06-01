@@ -25,6 +25,46 @@ class App extends Component{
 		}
 	}
 
+	componentDidMount =()=>{
+		// console.log("Getting local storage info")
+		if(typeof(Storage)!== undefined && localStorage.getItem("existingUser")){
+			// console.log("Getting local storage info")
+			let existingUser = JSON.parse(localStorage.getItem("existingUser"))
+			// console.log("existinguser:", existingUser)
+			// console.log("state:",this.state)
+
+			this.setState({
+				authUser: existingUser.authUser,
+				pollsVoted: existingUser.pollsVoted
+			})
+		}
+		// else{
+		// 	console.log("No local storage to get")
+		// }
+
+	}
+
+	componentDidUpdate=(prevProps, prevState)=>{
+		// console.log("component updated")
+		// console.log("prev state", prevState.pollsVoted)
+
+		if(prevState.pollsVoted !== this.state.pollsVoted || prevState.authUser !== this.state.authUser){
+
+			this.updateLocalStorage()
+		}
+	}
+
+	updateLocalStorage = ()=>{
+		// console.log("updating local storage")
+		let user = {
+			authUser: this.state.authUser,
+			pollsVoted: this.state.pollsVoted
+		}
+
+		localStorage.setItem("existingUser", JSON.stringify(user))
+	}
+
+
 	pollClickHandler =(id)=>{
 		pushState({currentPoll:id}, `/polls/${id}`)
 		this.setState({currentPoll:id})
@@ -93,6 +133,7 @@ class App extends Component{
 
 		dataConnect.vote(id, option, votes)
 		dataConnect.updateUser(user, "pollsVoted", pollsVoted)
+		// this.updateLocalStorage()
 	}
 
 	closeModal = ()=>{
