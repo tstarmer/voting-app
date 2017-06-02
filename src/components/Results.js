@@ -19,6 +19,25 @@ class Results extends Component{
 	}
 	
 	mapData =()=>{
+		let data = [["Choice", "Votes"]]
+		
+		let choices = this.props.poll.pollChoices
+		choices.forEach((choice)=>{
+			let row = []
+			row.push(choice.option, choice.votes)
+			data.push(row)
+		})
+		console.log(data)
+		this.setState({
+			data:data
+		})
+	}
+
+	componentWillMount=()=>{
+		this.mapData()
+	}
+	componentWillReceiveProps=()=>{
+		this.mapData()
 
 	}
 
@@ -26,11 +45,6 @@ class Results extends Component{
 	render(){
 		return(
 			<div className="results-container">
-				<h5>Current Votes</h5>
-				{this.props.poll.pollChoices.map((choice,i)=>{
-					return <ListItem key={i} option={choice.option} votes={choice.votes}/>
-				
-				})}
 				<Chart 
 					chartType="PieChart"
 					data={this.state.data}
@@ -38,6 +52,12 @@ class Results extends Component{
 					width="100%"
 					height="400px"
 				s/>
+				<h5>Current Votes</h5>
+				{this.props.poll.pollChoices.map((choice,i)=>{
+					return <ListItem key={i} option={choice.option} votes={choice.votes}/>
+				
+				})}
+				
 			</div>
 			)
 	}
