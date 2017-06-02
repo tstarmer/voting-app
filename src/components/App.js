@@ -30,26 +30,16 @@ class App extends Component{
 		if(typeof(Storage)!== undefined && localStorage.getItem("existingUser")){
 			// console.log("Getting local storage info")
 			let existingUser = JSON.parse(localStorage.getItem("existingUser"))
-			// console.log("existinguser:", existingUser)
-			// console.log("state:",this.state)
 
 			this.setState({
 				authUser: existingUser.authUser,
 				pollsVoted: existingUser.pollsVoted
 			})
 		}
-		// else{
-		// 	console.log("No local storage to get")
-		// }
-
 	}
 
 	componentDidUpdate=(prevProps, prevState)=>{
-		// console.log("component updated")
-		// console.log("prev state", prevState.pollsVoted)
-
 		if(prevState.pollsVoted !== this.state.pollsVoted || prevState.authUser !== this.state.authUser){
-
 			this.updateLocalStorage()
 		}
 	}
@@ -63,7 +53,6 @@ class App extends Component{
 
 		localStorage.setItem("existingUser", JSON.stringify(user))
 	}
-
 
 	pollClickHandler =(id)=>{
 		pushState({currentPoll:id}, `/polls/${id}`)
@@ -106,6 +95,7 @@ class App extends Component{
 			activeModal:null
 		})
 		this.closeModal();
+
 	}
 
 	voteSubmitHandler = (id, option) =>{
@@ -116,6 +106,7 @@ class App extends Component{
 
 		let user = this.state.authUser
 		let pollToChange = polls[id]	
+		//need to have a conditional for custom not existing
 		let choiceIndex = pollToChange.pollChoices.findIndex((element)=>{
 			return element.option === option
 		})
@@ -168,11 +159,28 @@ class App extends Component{
 		polls.push(newPoll)
 			
 		this.setState({polls:polls})
-
 		dataConnect.addPoll(newPoll)
-		//dataConnect.updateUser(this.state.authUser, "pollsCreated", id)
-		
 		this.closeClickHandler();
+	}
+
+	deletePoll = (pollId, user)=>{
+		let pollToRemove ={
+			id: pollId,
+			creatorId: user
+		}
+		const polls =[...this.state.polls]
+
+		let filterPolls = polls.filter((poll)=>{
+			return !(poll.id === pollToRemove.id && poll.creatorId === pollToRemove.creatorId)
+		})
+
+		this.setState({
+			polls:filterPolls,
+			pollsVoted:pollsVoted
+		})
+
+		dataConnect.deletePoll(pollToRemove);
+		//update state
 	}
 	
 	currentContent(){
@@ -195,6 +203,8 @@ class App extends Component{
 						onClose={this.closeClickHandler} 
 						onSubmit={this.voteSubmitHandler}
 						voted={this.state.pollsVoted.includes(this.state.currentPoll)}
+						user={this.state.authUser}
+						delete={this.deletePoll}
 
 					/>
 		}

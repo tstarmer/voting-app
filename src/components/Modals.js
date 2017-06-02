@@ -64,6 +64,7 @@ class Modals extends Component{
 					this.hashItem(email, 10,(res)=>{
 						newUser.email = res
 						dataConnect.addUser(newUser)//add to db
+						this.props.loginHandler(newUser.user, newUser.pollsVoted)
 					})
 				})
 			}else{

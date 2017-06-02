@@ -7,8 +7,25 @@ const dataConnect = {}
 dataConnect.update = (id, key, value) =>{
 	
 }
-dataConnect.delete = (id, key , value) =>{
+dataConnect.deletePoll = (pollToRemove) =>{
+	const data = JSON.stringify(pollToRemove)
+	const headers={
+		'Content-Type': 'application/json',
+		'Content-Length': data.length
+	}
+	const options = {
+		hostname:config.host,
+		port:config.port,
+		path:`/api/polls`,
+		method: 'DELETE',
+		headers: headers
+	}
+	const req = http.request(options, (res)=>{
+		console.log("DELETE response", res)
+	})
 
+	req.write(data)
+	req.end()
 }
 
 dataConnect.getUser =(user, callback)=>{

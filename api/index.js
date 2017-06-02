@@ -131,6 +131,23 @@ router.post("/polls", (req,res)=>{
     })
 })
 
+router.delete("/polls", (req,res)=>{
+    //console.log("post body", req.body)
+    let pollToRemove = req.body
+    MongoClient.connect(mongoUri,function(err,db){
+        if(err){
+            console.log("Connect error", err)
+        }else{
+            var polldb = db.collection('polls')
+            polldb.remove({
+                id:pollToRemove.id,
+                creatorId:pollToRemove.creatorId
+            },1)
+        }
+        db.close();
+    })
+})
+
 router.put("/polls/*",  (req,res)=>{
     //console.log("req body ", req.body)
     let id = req.body.id

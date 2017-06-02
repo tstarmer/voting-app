@@ -41,7 +41,6 @@ class Results extends Component{
 
 	}
 
-
 	render(){
 		return(
 			<div className="results-container">
